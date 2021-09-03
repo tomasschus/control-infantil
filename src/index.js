@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import SignUp from './components/SignUp'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-
+ 
 ReactDOM.render(
   <Router>
     <Switch>
