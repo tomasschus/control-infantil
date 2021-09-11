@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import SignIn from './components/SignIn';
 import reportWebVitals from './reportWebVitals';
-import SignUp from './components/SignUp'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import Home from './components/Home';
 
  
 ReactDOM.render(
   <Router>
     <Switch>
+      <Route path="/home" component={Home} />
       <Route path="/signup" component={SignUp} />
       <Route path="/" component={SignIn} />
 

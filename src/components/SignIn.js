@@ -13,6 +13,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { NavLink } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -61,6 +64,11 @@ const useStyles = makeStyles((theme) => ({
 export default function SignInSide() {
   const classes = useStyles();
 
+  const history = useHistory();
+  const handleSubmit = () =>{ 
+    history.push("/home");
+  }
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -73,7 +81,9 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Inicia tu sesión
           </Typography>
-          <form className={classes.form} noValidate>
+
+          {/* LOGIN Form */}
+          <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -100,6 +110,8 @@ export default function SignInSide() {
               control={<Checkbox value="remember" color="primary" />}
               label="Recordarme"
             />
+
+
             <Button
               type="submit"
               fullWidth
