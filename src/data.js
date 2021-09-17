@@ -46,6 +46,27 @@ const data = {
             description: 'Si necesitas ayuda para realizar trámites, podés comunicarte con nuestro centro de ayuda.',
             img: '/photos/info2.jpg',
             button: 'Conocé más'
+        },
+        {
+            id: '4',
+            title: 'Consulta de percentiles',
+            description: 'Tendrás a disposicion el parametro optimo de crecimiento del niño.',
+            img: 'https://docs.tibco.com/pub/spotfire_web_player/6.0.0-november-2013/es-ES/WebHelp/GUID-418B2936-C878-4771-B874-FA8ECAA39941-display.png',
+            button: 'Conocé más'
+        },
+        {
+            id: '5',
+            title: 'No se me ocurre aun',
+            description: 'desc',
+            img: 'https://redhistoria.com/wp-content/uploads/2019/05/Resumen-de-texto.png',
+            button: 'Conocé más'
+        },
+        {
+            id: '6',
+            title: 'No se me ocurre aun',
+            description: 'desc',
+            img: 'https://blogs.iadb.org/salud/wp-content/uploads/sites/15/2021/03/SPH_Post_GS-POSTMarzo.jpg',
+            button: 'Conocé más'
         }
     ],
     paciente: {

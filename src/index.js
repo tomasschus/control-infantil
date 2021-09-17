@@ -22,9 +22,9 @@ ReactDOM.render(
   <Router>
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Route path="/home" component={Home} />
       <Route path="/signup" component={SignUp} />
-      <Route path="/" component={SignIn} />
+      <Route path="/signin" component={SignIn} />
+      <Route path="/" component={Home} />
     </Switch>
   </Router>,
   document.getElementById('root')

@@ -15,23 +15,22 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-
 import Carousel from 'react-bootstrap/Carousel';
 import CarouselItem from 'react-bootstrap/CarouselItem';
 
 import fakeData from "../data"
 
 function Copyright() {
-    return (
-      <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://github.com/tomasschus/control-infantil">
-          DigitalControl.com
-        </Link>
-        {' '}{new Date().getFullYear()}{'.'}
-      </Typography>
-    );
-  }
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://github.com/tomasschus/control-infantil">
+        DigiControl.com
+      </Link>
+      {' '}{new Date().getFullYear()}{'.'}
+    </Typography>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -89,40 +88,47 @@ export default function Album() {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <MenuIcon />
-            </IconButton>
-          <MainIcon className={classes.icon} />
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
           <Typography className={classes.title} variant="h4" noWrap>
-            digicontrol.com
+            <Link color="inherit" style={{ textDecoration: 'none' }} href="#">
+              <MainIcon className={classes.icon} />
+              DigiControl.com
+            </Link>
           </Typography>
-          <Button color="inherit" variant="outlined">Iniciar sesión</Button>
+          <Link color="inherit" style={{ textDecoration: 'none' }} href="/signin">
+            <Button color="inherit" variant="outlined">Iniciar sesión</Button>
+          </Link>
         </Toolbar>
       </AppBar>
       <main>
-        
+
         {/* Main image */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Album layout
+              Quienes somos:
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Something short and leading about the collection below—its contents, the creator, etc.
-              Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-              entirely.
+              DIGICONTROL es una plataforma en la que podras hacer seguimiento del calendario médico de tus hijos, percentiles, y herramientas diseñadas para que concentres tu informacion más importante.
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justifyContent="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
-                    Main call to action
-                  </Button>
+                  <Link color="inherit" style={{ textDecoration: 'none' }} href="/#servicios">
+                    <Button variant="contained" color="primary">
+                      Quiero saber más
+                    </Button>
+                  </Link>
+
                 </Grid>
                 <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
-                  </Button>
+                  <Link color="inherit" style={{ textDecoration: 'none' }} href="/signup">
+                    <Button variant="outlined" color="primary">
+                      Registrarse gratis
+                    </Button>
+                  </Link>
                 </Grid>
               </Grid>
             </div>
@@ -140,18 +146,18 @@ export default function Album() {
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography className={classes.title} color="textSecondary" variant="body2" component="p" gutterBottom>
-                        {card.date}
+                      {card.date}
                     </Typography>
                     <Typography gutterBottom variant="h5" component="h2">
-                        {card.title}
+                      {card.title}
                     </Typography>
                     <Typography>
-                        {card.description}
+                      {card.description}
                     </Typography>
                   </CardContent>
                   <CardActions>
                     <Button size="small" color="primary">
-                        {card.button}
+                      {card.button}
                     </Button>
                   </CardActions>
                 </Card>
@@ -162,37 +168,41 @@ export default function Album() {
 
         {/* Carrousel container */}
         <Container className={classes.root} maxWidth="md">
-        <Carousel>
+          <Carousel>
             {fakeData.images.map((card) => (
-                <CarouselItem>
-                    <img className={ `d-block w-90 ${classes.carousel}` } src={'.' + card.img} alt="First slide"
-                    />
-                </CarouselItem>
+              <CarouselItem>
+                <img className={`d-block w-90 ${classes.carousel}`} src={'.' + card.img} alt="First slide"
+                />
+              </CarouselItem>
             ))}
-        </Carousel>
+          </Carousel>
         </Container>
 
         {/* Info container */}
         <Container className={classes.cardGrid} maxWidth="md">
+          <hr />
+          <Typography id="servicios" gutterBottom variant="h5" component="h2">
+            Novedades:  <br />
+          </Typography>
           <Grid container spacing={4}>
             {fakeData.info.map((card) => (
               <Grid item key={card.id} xs={20} sm={6} md={4}>
                 <Card className={classes.root} variant="outlined">
-                    <CardMedia
-                        className={classes.cardMedia} image={'.' + card.img} title="Image title"
-                    />
-                    <CardContent>
-                        <Typography variant="h5" component="h2">
-                            {card.title}
-                        </Typography>
-                        <br />
-                        <Typography variant="body2" component="p">
-                            {card.description}
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button variant="outlined" color="primary" size="small">{card.button}</Button>
-                    </CardActions>
+                  <CardMedia
+                    className={classes.cardMedia} image={card.img} title="Image title"
+                  />
+                  <CardContent>
+                    <Typography variant="h5" component="h2">
+                      {card.title}
+                    </Typography>
+                    <br />
+                    <Typography variant="body2" component="p">
+                      {card.description}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button variant="outlined" color="primary" size="small">{card.button}</Button>
+                  </CardActions>
                 </Card>
               </Grid>
             ))}
@@ -202,10 +212,10 @@ export default function Album() {
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+
         </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
+
         </Typography>
         <Copyright />
       </footer>

@@ -21,7 +21,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://github.com/tomasschus/control-infantil">
-        DigitalControl.com
+        DigiControl.com
       </Link>
       {' '}{new Date().getFullYear()}{'.'}
     </Typography>
