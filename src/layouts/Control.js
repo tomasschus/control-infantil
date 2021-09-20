@@ -23,7 +23,7 @@ import Footer from "components/Footer/Footer";
 import Sidebar from "components/Sidebar/Sidebar";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
-import routes from "adminRoutes.js";
+import routes from "controlRoutes.js";
 
 import sidebarImage from "assets/img/sidebar-3.jpg";
 
@@ -35,7 +35,7 @@ function Admin() {
   const mainPanel = React.useRef(null);
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/control") {
         return (
           <Route
             path={prop.layout + prop.path}

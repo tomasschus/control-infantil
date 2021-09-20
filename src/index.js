@@ -17,11 +17,13 @@ import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import AdminLayout from "layouts/Admin.js";
+import ControlLayout from "layouts/Control.js";
 
 ReactDOM.render(
   <Router>
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/control" render={(props) => <ControlLayout {...props} />} />
       <Route path="/signup" component={SignUp} />
       <Route path="/signin" component={SignIn} />
       <Route path="/" component={Home} />

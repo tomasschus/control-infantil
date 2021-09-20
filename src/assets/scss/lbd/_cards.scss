@@ -194,6 +194,79 @@
 
 }
 
+.card-child-selected{
+    .card-image{
+        height: 100px;
+    }
+    .card-image-plain{
+        height: 0;
+        margin-top: 100px;
+    }
+    .author{
+        text-align: center;
+        text-transform: none;
+        margin-top: -60px;
+    }
+    .avatar{
+        width: 125px;
+        height: 125px;
+        border: 3px solid #FFFFFF;
+        position: relative;
+        margin-bottom: 5px;
+
+        &.border-gray{
+            border-color: #EEEEEE;
+        }
+    }
+    .title{
+        line-height: 24px;
+    }
+    .card-body{
+        height: 175px;
+    }
+}
+
+.card-child{
+    .card-image{
+        height: 80px;
+    }
+    .card-image-plain{
+        height: 0;
+        margin-top: 100px;
+    }
+    .author{
+        text-align: center;
+        text-transform: none;
+        margin-top: -70px;
+    }
+    .avatar{
+        width: 125px;
+        height: 125px;
+        border: 3px solid #FFFFFF;
+        position: relative;
+        margin-bottom: 5px;
+
+        &.border-gray{
+            border-color: #EEEEEE;
+        }
+    }
+    .title{
+        line-height: 24px;
+    }
+    .card-body{
+        min-height: 100px;
+    }
+}
+
+.card-child{
+    .card-footer{
+        padding: 5px 15px 10px;
+    }
+    hr{
+        margin: 2px 8px;
+    }
+}
+
 .card-user{
     .card-image{
         height: 110px;

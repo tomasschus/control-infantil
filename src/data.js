@@ -119,6 +119,156 @@ const data = {
             author: 'author',
             cols: 1
         }
+    ],
+    percentiles: [
+        {
+            gender: "male",
+            labels: ["0","3M","6M","9M","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"],
+            peso: [3.47,6.26,8.02,9.24,9.24,10.15,12.7,14.84,16.9,19.06,21.4,23.26,25.64,28.6,32.22,36.51,41.38,46.68,52.15,57.49,62.27,66.03,68.19],
+            peso_max: 68.19,
+            altura: [
+                [60.06,60.44,66.81,71.1,75.08,86.68,94.62,102.11,109.11,115.4,120.4,126.18,131.71,136.53,141.53,146.23,156.05,160.92,168.21,171.4,173.23,174.1]
+            ],
+            altura_max: 174.1 
+        }
+    ],
+    children: [
+        {
+            id: 1,
+            nombre: 'Juan',
+            apellido: 'Suarez',
+            edad: 2,
+            img: '/boy-1.jpg'
+        },
+        {
+            id: 2,
+            nombre: 'Noelia',
+            apellido: 'Suarez',
+            edad: 5,
+            img: '/girl-0.jpg'
+        },
+        {
+            id: 3,
+            nombre: 'Tomás',
+            apellido: 'Suarez',
+            edad: 8,
+            img: '/boy-0.jpg'
+        }
+    ],
+    childrenSelected: [
+        {
+            id: 1,
+            nombre: 'Juan',
+            apellido: 'Suarez',
+            edad: 2,
+            img: '/boy-1.jpg'
+        }
+    ],
+    calendar: {
+        columns: [
+            'Edad \ Vacunas',
+            'BCG',
+            'Hepatitis B HB',
+            'Neumococo Conjugada',
+            'Quíntuple Pentavalente DTP-HB-Hib',
+            'Cuádruple o Quíntuple Pentavalente',
+            'Sabin OPV',
+            'Triple Viral SRP',
+            'Gripe',
+            'Hepatitis A HA',
+            'Tripe Bacteriana Celular DTP',
+            'Tripe Bacteriana Acelular dTpa',
+            'Doble Bacteriana dT',
+            'Virus Popiloma Humano VPH',
+            'Doble Viral SR',
+            'Fiebre Amarilla',
+            'Fiebre Hemorrágina Argentina FHA'
+        ],
+        rows: [
+            'Recién nacido',
+            '2 meses',
+            '4 meses',
+            '6 meses',
+            '12 meses',
+            '15-18 meses',
+            '18 meses',
+            '24 meses',
+            '5-6 años',
+            '11 años',
+            'Desde 15 años',
+            'Adultos',
+            'Embarazadas',
+            'Puerperio',
+            'Personal de salud'
+        ],
+        positions: [
+            ['Recién nacido','Única dosis','Dosis neonatal','','','','','','','','','','','','','',''],
+            ['2 meses','','1º dosis','1º dosis','','1º dosis','','','','','','','','','','',''],
+            ['4 meses','','2º dosis','2º dosis','','2º dosis','','','','','','','','','','',''],
+            ['6 meses','','','3º dosis','','3º dosis','','Dosis anual (E)','','','','','','','','',''],
+            ['12 meses','','Refuerzo','','','','1º dosis','Dosis anual (E)','Única dosis','','','','','','','',''],
+            ['15-18 meses','','','','1º refuerzo','4º dosis','','Dosis anual (E)','','','','','','','','',''],
+            ['18 meses','','','','','','','Dosis anual (E)','','','','','','','1º dosis (K)','',''],
+            ['24 meses','','','','','','','Dosis anual (E)','','','','','','','','',''],
+            ['5-6 años','','','','','Refuerzo','2º dosis','','','2º refuerzo','','','','','','',''],
+            ['11 años','Iniciar o completar esquema (C)','','','','','Iniciar o completar esquema (D)','','','','Refuerzo','','3º dosis (mujeres)','','Refuerzo (L)','Única dosis (M)',''],
+            ['Desde 15 años','','','','','','','','','','','','','','','',''],
+            ['Adultos','Iniciar o completar esquema (C)','','','','','Iniciar o completar esquema (D)','','','','','Refuerzo(I)','','Iniciar o completar esquema (D)','Refuerzo (L)','',''],
+            ['Embarazadas','','','','','','','Dosis anual (F)','','','Refuerzo (J)','','','','','','Iniciar o completar esquema (D)'],
+            ['Puerperio','','','','','','','Dosis anual (G)','','','','','','','','','Iniciar o completar esquema (D)'],
+            ['Personal de salud','Iniciar o completar esquema (C)','','','','','','Dosis anual','','','Única dosis (H)','','','Iniciar o completar esquema (D)','','','']
+        ]
+    },
+    history: [
+        {
+            id: 100,
+            date: '10/09/2021',
+            site: 'Htal. Fernandez',
+            vaccines: [
+                {
+                    id: 'COD 1234',
+                    descripcion: ''
+                },
+                {
+                    id: 'COD 1234',
+                    descripcion: ''
+                }
+            ],
+            notes: 'No informa'
+        },
+        {
+            id: 101,
+            date: '10/09/2021',
+            site: 'Htal. Fernandez',
+            vaccines: [
+                {
+                    id: 'COD 1234',
+                    descripcion: ''
+                },
+                {
+                    id: 'COD 1234',
+                    descripcion: ''
+                }
+            ],
+            notes: 'No informa'
+        },
+        {
+            id: 102,
+            date: '10/09/2021',
+            site: 'Htal. Italiano',
+            vaccines: [],
+            notes: 'No informa'
+        },
+        {
+            id: 103,
+            date: '10/09/2021',
+            site: 'Consultorios externos',
+            vaccines: [
+                'COD 1234',
+                'COD 1234'
+            ],
+            notes: []
+        }
     ]
 }
 
