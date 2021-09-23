@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
+import MedicamentoRecetado from "./MedicamentoRecetado";
 
 // react-bootstrap components
 import {
@@ -14,111 +17,42 @@ import {
 } from "react-bootstrap";
 
 function Upgrade() {
+  const [startDate, setStartDate] = useState(new Date());
+
+
   return (
     <>
       <Container fluid>
         <Row>
-          <Col className="ml-auto mr-auto" md="8">
-            <Card>
-              <div className="header text-center">
-                <h4 className="title">Light Bootstrap Dashboard PRO React</h4>
-                <p className="category">
-                  Are you looking for more components? Please check our Premium
-                  Version of Light Bootstrap Dashboard React.
-                </p>
-                <br></br>
+          <Col className="ml-auto mr-auto" md="11">
+            <div>
+              REGISTRO DE CONTROL PEDIATRICO
+              Los usuarios podrán registrar un nuevo control pediátrico a cada niño de su perfil. Un control pediátrico registra para un niño: fecha, peso, altura, diámetro cabeza (se mide hasta el año), observaciones, medicamentos recetados (medicamento, dosis, periodo), estudios médicos a realizar y sus resultados.
+
+            </div>
+            <form>
+              <div class="form-group">
+                <label for="datepicker">Fecha</label>
+                <DatePicker id="datepicker" selected={startDate} onChange={(date) => setStartDate(date)} />
               </div>
-              <Table responsive>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th className="text-center">Free</th>
-                    <th className="text-center">PRO</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Components</td>
-                    <td>16</td>
-                    <td>115+</td>
-                  </tr>
-                  <tr>
-                    <td>Plugins</td>
-                    <td>4</td>
-                    <td>14+</td>
-                  </tr>
-                  <tr>
-                    <td>Example Pages</td>
-                    <td>4</td>
-                    <td>22+</td>
-                  </tr>
-                  <tr>
-                    <td>Documentation</td>
-                    <td>
-                      <i className="fas fa-times text-danger"></i>
-                    </td>
-                    <td>
-                      <i className="fas fa-check text-success"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>SASS Files</td>
-                    <td>
-                      <i className="fas fa-times text-danger"></i>
-                    </td>
-                    <td>
-                      <i className="fas fa-check text-success"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Login/Register/Lock Pages</td>
-                    <td>
-                      <i className="fas fa-times text-danger"></i>
-                    </td>
-                    <td>
-                      <i className="fas fa-check text-success"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Premium Support</td>
-                    <td>
-                      <i className="fas fa-times text-danger"></i>
-                    </td>
-                    <td>
-                      <i className="fas fa-check text-success"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>Free</td>
-                    <td>Just $49</td>
-                  </tr>
-                  <tr className="last-row">
-                    <td></td>
-                    <td>
-                      <Button
-                        className="btn-round btn-fill disabled"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        variant="default"
-                      >
-                        Current Version
-                      </Button>
-                    </td>
-                    <td>
-                      <Button
-                        className="btn-round btn-fill"
-                        href="http://www.creative-tim.com/product/light-bootstrap-dashboard-pro-react/?ref=lbdrupgrade"
-                        target="_blank"
-                        variant="info"
-                      >
-                        Upgrade to PRO
-                      </Button>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card>
+              <div class="row">
+                <div class="col">
+                  <label type="text" for="exampleFormControlTextarea1">Peso en Kg</label>
+                  <input type="number" id="typeNumber" class="form-control" />
+                </div>
+                <div class="col">
+                 <label type="text" for="exampleFormControlTextarea1">Diametro de cabeza en cm</label>
+                  <input type="number" id="typeNumber" class="form-control" />
+                </div>
+              </div> <br/>
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">Observaciones</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              </div> <hr/> 
+              <br/>
+              <MedicamentoRecetado/> <hr/>
+              <MedicamentoRecetado/> <hr/>
+            </form>
           </Col>
         </Row>
       </Container>
