@@ -67,6 +67,8 @@ function Child() {
         <NotificationAlert ref={notificationAlertRef} />
       </div>
       <Container fluid>
+      <button type="button" class="btn btn-primary py-2" >Agregar</button>
+        <hr/>
         <Row>
           
           {fakeData.children.map((child) => (

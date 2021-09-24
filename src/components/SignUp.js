@@ -62,13 +62,13 @@ export default function SignUp() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
+                autoComplete="given-name"
                 name="firstName"
                 variant="outlined"
                 required
                 fullWidth
                 id="firstName"
-                label="First Name"
+                label="Nombre"
                 autoFocus
               />
             </Grid>
@@ -78,9 +78,31 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="lastName"
-                label="Last Name"
+                label="Apellido"
                 name="lastName"
-                autoComplete="lname"
+                autoComplete="family-name"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="dni"
+                label="DNI"
+                name="dni"
+                autoComplete="dni"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="number"
+                label="Número de teléfono"
+                name="number"
+                autoComplete="phone"
               />
             </Grid>
             <Grid item xs={12}>
@@ -89,7 +111,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
               />
@@ -103,7 +125,7 @@ export default function SignUp() {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
+                autoComplete="new-password"
               />
             </Grid>
             <Grid item xs={12}>
