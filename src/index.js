@@ -18,6 +18,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import AdminLayout from "layouts/Admin.js";
 import ControlLayout from "layouts/Control.js";
+import Forget from 'components/Forget';
 
 ReactDOM.render(
   <Router>
@@ -26,6 +27,7 @@ ReactDOM.render(
       <Route path="/control" render={(props) => <ControlLayout {...props} />} />
       <Route path="/signup" component={SignUp} />
       <Route path="/signin" component={SignIn} />
+      <Route path="/forget" component={Forget} />
       <Route path="/" component={Home} />
     </Switch>
   </Router>,

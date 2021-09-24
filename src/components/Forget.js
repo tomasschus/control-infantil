@@ -61,12 +61,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide() {
+export default function Forget() {
   const classes = useStyles();
 
   const history = useHistory();
   const handleSubmit = () =>{ 
-    history.push("/control/children");
+    history.push("/forget");
   }
 
   return (
@@ -79,9 +79,11 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Inicia tu sesión
+            ¿Olvidaste tu contraseña?
           </Typography>
-
+          <Typography component="p">
+            Te enviaremos un correo para la recuperación de tu clave
+          </Typography>
           {/* LOGIN Form */}
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
@@ -95,21 +97,6 @@ export default function SignInSide() {
               autoComplete="email"
               autoFocus
             />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Contraseña"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Recordarme"
-            />
 
 
             <Button
@@ -119,12 +106,12 @@ export default function SignInSide() {
               color="primary"
               className={classes.submit}
             >
-              Iniciar sesión
+              Enviar
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/forget" variant="body2">
-                  ¿Olvidaste tu contraseña?
+                <Link href="/signin" variant="body2">
+                  Iniciar Sesión
                 </Link>
               </Grid>
               <Grid item>
