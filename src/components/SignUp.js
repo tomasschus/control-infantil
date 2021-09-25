@@ -18,7 +18,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://github.com/tomasschus/control-infantil">
-        DigitalControl.com
+        DigiControl.com
       </Link>
       {' '}{new Date().getFullYear()}{'.'}
     </Typography>
@@ -131,7 +131,7 @@ export default function SignUp() {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                label="Quiero recibir información, noticias y/o novedades por email."
               />
             </Grid>
           </Grid>
@@ -142,12 +142,12 @@ export default function SignUp() {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Registrarse
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/" variant="body2">
-                Already have an account? Sign in
+                ¿Tenés cuenta? Ingresá
               </Link>
             </Grid>
           </Grid>

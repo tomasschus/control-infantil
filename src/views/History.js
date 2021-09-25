@@ -30,6 +30,16 @@ function History() {
                   Toda la información pertinente de los turnos a los que asistió al menor acompañado por el tutor reponsable.
                 </p>
               </Card.Header>
+              <div class="pt-4">
+                  <select class="custom-select  form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                    <option selected>Todos los hijos</option>
+                    {
+                      fakeData.children.map( (child)=>(
+                        <option value="1">{child.nombre} </option>
+                       ) )
+                    }
+                  </select>
+                </div>
               <Card.Body className="table-full-width table-responsive px-0">
                 <Table className="table-hover">
                   <thead>

@@ -26,30 +26,25 @@ class Footer extends Component {
           <nav>
             <ul className="footer-menu">
               <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Home
+                <a href="/" onClick={(e) => e.preventDefault()}>
+                  Inicio
                 </a>
               </li>
               <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Company
+                <a href="/" onClick={(e) => e.preventDefault()}>
+                  Quienes somos
                 </a>
               </li>
               <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Portfolio
+                <a href="/#servicios" onClick={(e) => e.preventDefault()}>
+                  Servicios
                 </a>
               </li>
-              <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Blog
-                </a>
-              </li>
+            
             </ul>
             <p className="copyright text-center">
               © {new Date().getFullYear()}{" "}
-              <a href="http://www.creative-tim.com">Creative Tim</a>, made with
-              love for a better web
+              <a href="https://github.com/tomasschus/control-infantil">Digicontrol.com</a>
             </p>
           </nav>
         </Container>

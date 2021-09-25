@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-
+import fakeData from "../data"
 
 // react-bootstrap components
 import {
@@ -26,10 +26,25 @@ function Upgrade() {
         <Row>
           <Col className="ml-auto mr-auto" md="11">
             <form>
-              <div class="form-group">
-                <label for="datepicker">Fecha</label>
-                <DatePicker id="datepicker" selected={startDate} onChange={(date) => setStartDate(date)} />
-              </div>
+
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="datepicker">Fecha</label>
+                    <DatePicker id="datepicker" selected={startDate} onChange={(date) => setStartDate(date)} />
+                  </div>
+                </div>
+                <div class="col">
+                  <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                    <option selected>Seleccione hijo</option>
+                    {
+                      fakeData.children.map( (child)=>(
+                        <option value="1">{child.nombre} </option>
+                       ) )
+                    }
+                  </select>
+                </div>
+              </div> <br />
               <div class="row">
                 <div class="col">
                   <label type="text" for="exampleFormControlTextarea1">Peso en Kg</label>
@@ -45,29 +60,29 @@ function Upgrade() {
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
               </div> <hr />
               <br />
-              <button class="btn btn-primary py-2" onClick={(e) => { e.preventDefault(); setMedicamentosRecetados([...MedicamentosRecetados, { "id": MedicamentosRecetados.length, "nombreMedicamento": "", "dosis": "", "periodo": "", "receta": "" }]) }} > agregar medicamento </button>
+              <button class="btn btn-primary py-2" onClick={(e) => { e.preventDefault(); setMedicamentosRecetados([...MedicamentosRecetados, { "id": MedicamentosRecetados.length, "nombreMedicamento": "", "dosis": "", "periodo": "", "receta": "" }]) }} > Agregar receta </button>
               {MedicamentosRecetados.map((MedicamentoRecetado) => (
                 <div class="border border-dark px-2">
-                  <h3 class="text-center"> Receta {MedicamentoRecetado.id+1}</h3>
+                  <h3 class="text-center"> Receta {MedicamentoRecetado.id + 1}</h3>
                   <div class="row py-4 " id={MedicamentoRecetado.id}>
                     <div class="col">
                       <label type="text" for="exampleFormControlTextarea1">Nombre medicamento</label>
-                      <input type="text" id={ `name-medicamento-${MedicamentoRecetado.id}` }  class="form-control" />
+                      <input type="text" id={`name-medicamento-${MedicamentoRecetado.id}`} class="form-control" />
                     </div>
                     <div class="col">
                       <label type="text" for="exampleFormControlTextarea1">Dosis en gs</label>
-                      <input type="number" id={ `dosis-${MedicamentoRecetado.id}` } class="form-control" />
+                      <input type="number" id={`dosis-${MedicamentoRecetado.id}`} class="form-control" />
                     </div>
                     <div class="col">
                       <label type="text" for="exampleFormControlTextarea1">Período</label>
-                      <input type="text" id={ `periodo-${MedicamentoRecetado.id}` } class="form-control" />
+                      <input type="text" id={`periodo-${MedicamentoRecetado.id}`} class="form-control" />
                     </div>
                   </div>
-                  <div class="form-group"> 
+                  <div class="form-group">
                     <label for="exampleFormControlFile1">Receta</label>
-                    <input type="file" class="form-control-file" id={ `file-${MedicamentoRecetado.id}` } />
+                    <input type="file" class="form-control-file" id={`file-${MedicamentoRecetado.id}`} />
                   </div>
-                  <hr class="py-2"/> <br/>
+                  <hr class="py-2" /> <br />
                 </div>))}
             </form>
           </Col>

@@ -48,8 +48,8 @@ function Sidebar({ color, image, routes }) {
               />
             </div>
           </a>
-          <a className="simple-text" href="http://www.creative-tim.com">
-            Creative Tim
+          <a className="simple-text" href="https://github.com/tomasschus/control-infantil">
+            DigiControl.com
           </a>
         </div>
         <Nav>

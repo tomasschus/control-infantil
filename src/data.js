@@ -4,7 +4,7 @@ const data = {
             id: '10',
             date: '10 de Sept de 2021',
             title: 'Nuestros servicios',
-            description: 'Ahora podés consultar el historial de la documentación de pago desde tu PC.',
+            description: 'Ahora podes centralizar toda la documentación en nuestra plataforma.',
             img: '/photos/new2.jpg',
             button: 'Ver más'
         },

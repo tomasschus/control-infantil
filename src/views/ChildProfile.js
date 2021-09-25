@@ -74,14 +74,14 @@ function Child() {
       <Container fluid>
         
 
-      <button type="button" class="btn btn-primary py-2" onClick={() => {
-          setChildren([...children, {
+      <button type="button" className="btn btn-primary py-2" onClick={() => {
+          setChildren([{
             id: children.length,
             nombre: 'Nombre',
             apellido: 'Apellido',
             edad: 1,
             img: '/user.png'
-          } ]);
+          },...children ]);
         }} >Agregar
 
       </button>
@@ -169,6 +169,12 @@ function Child() {
         <Modal.Body className="text-center">
           <Form>
             <Row>
+              <Col className="pr-1" md="12">
+                <Form.Group>
+                  <label>Foto de perfil </label> <br/>
+                  <input type="file" />
+                </Form.Group>
+              </Col>
               <Col className="pr-1" md="6">
                 <Form.Group>
                   <label>Nombre</label>
@@ -183,10 +189,28 @@ function Child() {
               </Col>
             </Row>
             <Row>
+              <Col className="py-4" md="6">
+                <Form.Group>
+                  <label className="px-2">Sexo:</label> <br/>
+                  <select class="custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                    <option selected>Seleccione</option>
+                    <option value="1">Masculino</option>
+                    <option value="2">Femenino</option>
+                  </select>
+                </Form.Group>
+              </Col>
+              <Col className="py-4" md="6">
+                <Form.Group>
+                  <label className="px-2">Edad:</label>
+                  <input type="number"></input>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
               <Col md="12">
                 <Form.Group>
-                  <label>Address</label>
-                  <Form.Control placeholder="Home Address" type="text"></Form.Control>
+                  <label>Grupo Sanguineo</label>
+                  <Form.Control placeholder="Grupo Sanguineo" type="text"></Form.Control>
                 </Form.Group>
               </Col>
             </Row>
@@ -211,7 +235,7 @@ function Child() {
             variant="link"
             onClick={() => setShowModal(false)}
           >
-            Back
+            Atras
           </Button>
           <Button
             className="btn-simple"
@@ -219,7 +243,7 @@ function Child() {
             variant="link"
             onClick={() => setShowModal(false)}
           >
-            Close
+            Cerrar
           </Button>
         </div>
       </Modal>

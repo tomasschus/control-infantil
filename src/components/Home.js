@@ -88,9 +88,7 @@ export default function Album() {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
+          
           <Typography className={classes.title} variant="h4" noWrap>
             <Link color="inherit" style={{ textDecoration: 'none' }} href="#">
               <MainIcon className={classes.icon} />
@@ -182,7 +180,7 @@ export default function Album() {
         <Container className={classes.cardGrid} maxWidth="md">
           <hr />
           <Typography id="servicios" gutterBottom variant="h5" component="h2">
-            Novedades:  <br />
+            Nuestros Servicios:  <br />
           </Typography>
           <Grid container spacing={4}>
             {fakeData.info.map((card) => (

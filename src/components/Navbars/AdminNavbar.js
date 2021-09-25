@@ -41,7 +41,7 @@ function Header() {
         return routes[i].name;
       }
     }
-    return "Brand";
+    return "Administrador";
   };
   return (
     <Navbar bg="light" expand="lg">
@@ -131,7 +131,7 @@ function Header() {
                 href="#pablo"
                 onClick={(e) => e.preventDefault()}
               >
-                <span className="no-icon">Log out</span>
+                <span className="no-icon">Salir</span>
               </Nav.Link>
             </Nav.Item>
           </Nav>
