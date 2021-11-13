@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useRef} from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +13,6 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
 import { NavLink } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 
@@ -63,11 +63,50 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
   const classes = useStyles();
-
+  const url = process.env.REACT_APP_BACKEND_URL
   const history = useHistory();
-  const handleSubmit = () =>{ 
-    history.push("/control/children");
+
+  var dataUser = {
+    email:useRef(''),
+    password:useRef('') 
   }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // dataUser.email.current.value 
+    // dataUser.password.current.value
+
+    var body = {
+      "email":dataUser.email.current.value,
+      "password":dataUser.password.current.value
+    }
+
+    axios.post(url+"api/users/login", body)
+      .then((response) => {
+        sessionStorage.setItem("token",response.data.token);
+        history.push("/control/children");
+      })
+      .catch(
+          (error) => { 
+            alert("Usuario o contraseña incorrectos.");
+           }
+    )
+  }
+
+    
+    /*var headers = {
+      "token":""
+    }
+
+    axios.get(url+"api/users/login", { 'headers': headers })
+      .then((response => {
+        console.log(response.data);
+      })
+        .catch(
+          (error) => { alert("Error en la comunicacion. Intente más tarde."); })
+    );*/
+  
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -94,6 +133,7 @@ export default function SignInSide() {
               name="email"
               autoComplete="email"
               autoFocus
+              inputRef={dataUser.email}
             />
             <TextField
               variant="outlined"
@@ -105,12 +145,12 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
+              inputRef={dataUser.password}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Recordarme"
             />
-
 
             <Button
               type="submit"

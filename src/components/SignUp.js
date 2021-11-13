@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useRef} from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -47,6 +49,43 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const url = process.env.REACT_APP_BACKEND_URL
+  const history = useHistory();
+
+  var data = {
+    name: useRef('') ,
+    surname:useRef('') ,
+    dni:useRef('') ,
+    email:useRef('') ,
+    password:useRef('') ,
+    telephone:useRef('')
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    var body = {
+      "name": data.name.current.value ,
+      "surname":data.surname.current.value ,
+      "dni":data.dni.current.value,
+      "email":data.email.current.value ,
+      "password":data.password.current.value,
+      "telephone":data.telephone.current.value
+    }
+    console.log(body)
+    axios.post(url+"api/users/registration", body)
+      .then((response) => {
+        console.log(response.data)
+        sessionStorage.setItem("token",response.data.createdUser);
+        history.push("/control/children");
+      })
+      .catch(
+          (error) => { 
+            alert("Este mail ya está registrado");
+           }
+    )
+  }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -58,7 +97,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}  onSubmit={handleSubmit} >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -70,6 +109,7 @@ export default function SignUp() {
                 id="firstName"
                 label="Nombre"
                 autoFocus
+                inputRef={data.name}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -81,6 +121,7 @@ export default function SignUp() {
                 label="Apellido"
                 name="lastName"
                 autoComplete="family-name"
+                inputRef={data.surname}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -92,6 +133,7 @@ export default function SignUp() {
                 label="DNI"
                 name="dni"
                 autoComplete="dni"
+                inputRef={data.dni}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -103,6 +145,7 @@ export default function SignUp() {
                 label="Número de teléfono"
                 name="number"
                 autoComplete="phone"
+                inputRef={data.telephone}
               />
             </Grid>
             <Grid item xs={12}>
@@ -114,6 +157,7 @@ export default function SignUp() {
                 label="Email"
                 name="email"
                 autoComplete="email"
+                inputRef={data.email}                
               />
             </Grid>
             <Grid item xs={12}>
@@ -126,6 +170,7 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                inputRef={data.password}
               />
             </Grid>
             <Grid item xs={12}>

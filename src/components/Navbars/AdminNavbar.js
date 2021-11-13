@@ -18,6 +18,7 @@
 import React, { Component } from "react";
 import { useLocation } from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 import routes from "adminRoutes.js";
 
@@ -34,6 +35,19 @@ function Header() {
     };
     document.body.appendChild(node);
   };
+
+
+  const history = useHistory();
+
+  if(sessionStorage.getItem("token")===null){
+    history.push("/signin");
+  }
+
+  const handleLogout = (e) => {
+    e.preventDefault()
+    sessionStorage.removeItem("token")
+    history.push("/home");
+  }
 
   const getBrandText = () => {
     for (let i = 0; i < routes.length; i++) {
@@ -129,7 +143,7 @@ function Header() {
               <Nav.Link
                 className="m-0"
                 href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => handleLogout(e)}
               >
                 <span className="no-icon">Salir</span>
               </Nav.Link>

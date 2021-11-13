@@ -17,7 +17,7 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Carousel from 'react-bootstrap/Carousel';
 import CarouselItem from 'react-bootstrap/CarouselItem';
-
+import { useHistory } from "react-router-dom";
 import fakeData from "../data"
 
 function Copyright() {
@@ -82,6 +82,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Album() {
   const classes = useStyles();
+  const history = useHistory();
+
 
   return (
     <React.Fragment>
