@@ -46,6 +46,7 @@ function Header() {
   const handleLogout = (e) => {
     e.preventDefault()
     sessionStorage.removeItem("token")
+    sessionStorage.removeItem("email")
     history.push("/home");
   }
 

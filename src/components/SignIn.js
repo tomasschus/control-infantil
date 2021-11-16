@@ -85,6 +85,7 @@ export default function SignInSide() {
     axios.post(url+"api/users/login", body)
       .then((response) => {
         sessionStorage.setItem("token",response.data.token);
+        sessionStorage.setItem("email",dataUser.email.current.value)
         history.push("/control/children");
       })
       .catch(

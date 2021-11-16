@@ -1,7 +1,7 @@
 import React from "react";
 import fakeData from "../data"
 import NotificationAlert from "react-notification-alert";
-
+import axios from "axios";
 // react-bootstrap components
 import {
   Badge,
@@ -18,11 +18,125 @@ import {
   Tooltip
 } from "react-bootstrap";
 
+function calcularEdad(fecha) {
+  try{
+    var hoy = new Date();
+    var cumpleanos = (fecha).split("-");
+    var edad = hoy.getFullYear() - parseInt(cumpleanos[0]);
+    var m = hoy.getMonth() - parseInt(cumpleanos[1]);
 
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+
+    return edad;
+  }catch{
+    return ""
+  }
+}
+
+function deleteChildren( child,setChildren ){
+  var header = {
+    headers: {
+      'Content-Type': 'application/json',
+      "x-access-token":sessionStorage.getItem("token")
+    }
+  }
+  
+  axios.delete(url+"api/children/"+child._id , header)
+  .then((response) => {
+    alert("Niño eliminado satisfactoriamente")
+    console.log(response)
+    getListadoChildren(setChildren)
+  })
+  .catch(
+      (error) => { 
+        alert(error);
+      }
+  )
+}
+
+const url = process.env.REACT_APP_BACKEND_URL
+
+function actualizarChildren(childrenToEdit, setChildrenToEdit, setChildren){
+  console.log(childrenToEdit)
+  var header = {
+    headers: {
+      'Content-Type': 'application/json',
+      "x-access-token":sessionStorage.getItem("token")
+    }
+  }
+  
+  axios.put(url+"api/children", childrenToEdit , header)
+  .then((response) => {
+    alert("Datos actualizados")
+    console.log(response)
+    getListadoChildren(setChildren)
+  })
+  .catch(
+      (error) => { 
+        alert(error);
+      }
+  )
+}
+
+function createChildren(){
+  var body = {
+    email: sessionStorage.getItem("email"),
+    name: "",
+    surname: "",
+    img: "",
+    gender: "",
+    birthday: "",
+    bloodType: "",
+    notes: ""
+  }
+  var header = {
+    headers: {
+      'Content-Type': 'application/json',
+      "x-access-token":sessionStorage.getItem("token")
+    }
+  }
+  axios.post(url+"api/children", body , header)
+  .then((response) => {
+    alert("Se creo un nuevo niño, por favor edite los datos.")
+
+  })
+  .catch(
+      (error) => { 
+        alert("Ocurrio un error. Intente mas tarde.");
+      }
+  )
+}
+
+var dataCargada=false;
+function getListadoChildren(setChildren){
+  var header = {
+    headers: {
+      'Content-Type': 'application/json',
+      "x-access-token":sessionStorage.getItem("token")
+    }
+  }
+  var body = {
+    "email":sessionStorage.getItem("email")
+  }
+  axios.post(url+"api/children/find", body , header)
+  .then((response) => {
+    var x = (response["data"]["data"])
+    setChildren(x);
+    dataCargada=true
+  })
+  .catch(
+      (error) => { 
+        alert(error);
+      }
+  )
+}
 
 function Child() {
   const [children, setChildren] = React.useState(fakeData.children)
-
+  if(!dataCargada){getListadoChildren(setChildren)}
+  const [childrenToEdit, setChildrenToEdit] = React.useState({})
 
   const [showModal, setShowModal] = React.useState(false);
   const notificationAlertRef = React.useRef(null);
@@ -73,26 +187,30 @@ function Child() {
       </div>
       <Container fluid>
         
+      <div class="d-flex justify-content-between align-items-center">
+      <button type="button" className="btn btn-primary py-2" onClick={() => { createChildren() }} 
+      > Agregar </button>
 
-      <button type="button" className="btn btn-primary py-2" onClick={() => {
-          setChildren([{
-            id: children.length,
-            nombre: 'Nombre',
-            apellido: 'Apellido',
-            edad: 1,
-            img: '/user.png'
-          },...children ]);
-        }} >Agregar
+      <button type="button" 
+      className="btn btn-warning py-2 ml-auto" 
+      onClick={() => { dataCargada=false; getListadoChildren(setChildren) }}
+      > Actualizar</button>
 
-      </button>
-
+      {!dataCargada?(
+        <div class="spinner-border text-warning" role="status"
+        >
+         <span class="sr-only">Loading...</span>
+       </div>
+      
+      ):(<></>)}
+      </div>
       <hr />
       <Row>
 
         {children.map((child) => (
           <Col md="3">
 
-            <Card key="child.id" className="card-child">
+            <Card key="child._id" className="card-child">
               <div className="card-image">
                 <img alt="..." src={require("assets/img/background.jpg").default}></img>
               </div>
@@ -100,11 +218,11 @@ function Child() {
               <Card.Body>
                 <div className="author">
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <img alt="..." className="avatar border-gray" src={require("assets/img/faces" + child.img).default}
+                    <img alt="..." className="avatar border-gray" src={require("assets/img/background.jpg").default}
                     ></img>
-                    <h5 className="title">{child.nombre} {child.apellido}</h5>
+                    <h5 className="title">{child.name} {child.surname}</h5>
                   </a>
-                  <p className="description">{child.edad} años</p>
+                  <p className="description">{calcularEdad(child.birthday)} años</p>
                 </div>
               </Card.Body>
               <hr></hr>
@@ -136,7 +254,13 @@ function Child() {
                 }
                 >
                   <Button className="btn-simple btn-icon" variant="link"
-                    onClick={() => setShowModal(true)}> <i className="fa fa-edit"></i>
+                    onClick={() => 
+                    {setShowModal(true); 
+                    setChildrenToEdit( child )
+                    console.log(childrenToEdit);
+                  }
+                    }                    
+                    > <i className="fa fa-edit"></i>
                   </Button>
                 </OverlayTrigger>
 
@@ -148,6 +272,21 @@ function Child() {
                   <Button className="btn-simple btn-icon" href="/control/charts"
                     onClick={(e) => e.preventDefault()} variant="link"
                   > <i className="nc-icon nc-chart-bar-32"></i>
+                  </Button>
+                </OverlayTrigger>
+
+                {/* Open modal - Edit data */}
+                <OverlayTrigger overlay={
+                  <Tooltip id="tooltip-488980968"> Eliminar </Tooltip>
+                }
+                >
+                <Button className="btn-simple btn-icon" variant="link"
+                    onClick={() => 
+                    {
+                    deleteChildren( child, setChildren )
+                    }
+                    }                    
+                    > <i className="fas fa-user-slash"></i>
                   </Button>
                 </OverlayTrigger>
               </div>
@@ -178,13 +317,23 @@ function Child() {
               <Col className="pr-1" md="6">
                 <Form.Group>
                   <label>Nombre</label>
-                  <Form.Control placeholder="Nombre" type="text" defaultValue="Juan"></Form.Control>
+                  <Form.Control placeholder="Nombre"
+                   onChange={ (e)=> { setChildrenToEdit({
+                      ...childrenToEdit,
+                      name: e.target.value
+                    }) }} 
+                  type="text" value={childrenToEdit.name}></Form.Control>
                 </Form.Group>
               </Col>
               <Col className="pl-1" md="6">
                 <Form.Group>
                   <label>Apellido</label>
-                  <Form.Control placeholder="Apellido" type="text" defaultValue="Suarez"></Form.Control>
+                  <Form.Control placeholder="Apellido" type="text" value={childrenToEdit.surname}
+                  onChange={ (e)=> { setChildrenToEdit({
+                    ...childrenToEdit,
+                    surname: e.target.value
+                  }) }} 
+                  ></Form.Control>
                 </Form.Group>
               </Col>
             </Row>
@@ -192,17 +341,27 @@ function Child() {
               <Col className="py-4" md="6">
                 <Form.Group>
                   <label className="px-2">Sexo:</label> <br/>
-                  <select class="custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <select class="custom-select form-select form-select-lg mb-3"
+                  onChange={ (e)=> { setChildrenToEdit({
+                    ...childrenToEdit,
+                    gender: e.target.value
+                  }) }} 
+                   value={childrenToEdit.gender} aria-label=".form-select-lg example">
                     <option selected>Seleccione</option>
-                    <option value="1">Masculino</option>
-                    <option value="2">Femenino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
                   </select>
                 </Form.Group>
               </Col>
               <Col className="py-4" md="6">
                 <Form.Group>
-                  <label className="px-2">Edad:</label>
-                  <input type="number"></input>
+                  <label className="px-2">Fecha de nacimiento:</label>
+                  <input type="date" 
+                  onChange={ (e)=> { setChildrenToEdit({
+                    ...childrenToEdit,
+                    birthday: e.target.value
+                  }) }} 
+                  value={childrenToEdit.birthday} ></input>
                 </Form.Group>
               </Col>
             </Row>
@@ -210,7 +369,12 @@ function Child() {
               <Col md="12">
                 <Form.Group>
                   <label>Grupo Sanguineo</label>
-                  <Form.Control placeholder="Grupo Sanguineo" type="text"></Form.Control>
+                  <Form.Control placeholder="Grupo Sanguineo" type="text"
+                  onChange={ (e)=> { setChildrenToEdit({
+                    ...childrenToEdit,
+                    bloodType: e.target.value
+                  }) }} 
+                   value={childrenToEdit.bloodType}></Form.Control>
                 </Form.Group>
               </Col>
             </Row>
@@ -218,12 +382,18 @@ function Child() {
               <Col md="12">
                 <Form.Group>
                   <label>Observaciones:</label>
-                  <Form.Control cols="80" defaultValue="Alérgia al polvo y al pelo de perro" placeholder="Escriba una observación del menor" rows="4" as="textarea"></Form.Control>
+                  <Form.Control cols="80" value={childrenToEdit.notes} 
+                  onChange={ (e)=> { setChildrenToEdit({
+                    ...childrenToEdit,
+                    notes: e.target.value
+                  }) }} 
+                  placeholder="Escriba una observación del menor" rows="4" as="textarea"></Form.Control>
                 </Form.Group>
               </Col>
             </Row>
-            <Button className="btn-fill pull-right" variant="info" onClick={() => setShowModal(false)}> {/* type="submit" */}
-              Actualizar
+            <Button className="btn-fill pull-right" variant="info" onClick={() =>{
+              actualizarChildren(childrenToEdit,setChildrenToEdit,setChildren); setShowModal(false); }}> {/* type="submit" */}
+              Actualizar 
             </Button>
             <div className="clearfix"></div>
           </Form>
