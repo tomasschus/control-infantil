@@ -134,7 +134,8 @@ function getListadoChildren(setChildren){
 }
 
 function Child() {
-  const [children, setChildren] = React.useState(fakeData.children)
+  const [children, setChildren] = React.useState([])
+  console.log(children)
   if(!dataCargada){getListadoChildren(setChildren)}
   const [childrenToEdit, setChildrenToEdit] = React.useState({})
 
@@ -186,14 +187,14 @@ function Child() {
         <NotificationAlert ref={notificationAlertRef} />
       </div>
       <Container fluid>
-        
+      
       <div class="d-flex justify-content-between align-items-center">
       <button type="button" className="btn btn-primary py-2" onClick={() => { createChildren() }} 
       > Agregar </button>
 
       <button type="button" 
       className="btn btn-warning py-2 ml-auto" 
-      onClick={() => { dataCargada=false; getListadoChildren(setChildren) }}
+      onClick={() => { dataCargada=false; console.log(children); getListadoChildren(setChildren);}}
       > Actualizar</button>
 
       {!dataCargada?(
@@ -205,8 +206,8 @@ function Child() {
       ):(<></>)}
       </div>
       <hr />
-      <Row>
-
+      { children.length!==0? (
+      <Row >
         {children.map((child) => (
           <Col md="3">
 
@@ -294,7 +295,7 @@ function Child() {
 
           </Col>
         ))}
-      </Row>
+      </Row> ):(<>{getListadoChildren(setChildren)}</>)}
 
       {/* Mini Modal */}
       <Modal
