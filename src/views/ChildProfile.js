@@ -18,6 +18,8 @@ import {
   Tooltip
 } from "react-bootstrap";
 
+const url = process.env.REACT_APP_BACKEND_URL
+
 function calcularEdad(fecha) {
   try{
     var hoy = new Date();
@@ -56,8 +58,6 @@ function deleteChildren( child,setChildren ){
   )
 }
 
-const url = process.env.REACT_APP_BACKEND_URL
-
 function actualizarChildren(childrenToEdit, setChildrenToEdit, setChildren){
   console.log(childrenToEdit)
   var header = {
@@ -80,7 +80,7 @@ function actualizarChildren(childrenToEdit, setChildrenToEdit, setChildren){
   )
 }
 
-function createChildren(){
+function createChildren(setChildren){
   var body = {
     email: sessionStorage.getItem("email"),
     name: "",
@@ -99,6 +99,7 @@ function createChildren(){
   }
   axios.post(url+"api/children", body , header)
   .then((response) => {
+    getListadoChildren(setChildren)
     alert("Se creo un nuevo niño, por favor edite los datos.")
 
   })
@@ -124,7 +125,7 @@ function getListadoChildren(setChildren){
   .then((response) => {
     var x = (response["data"]["data"])
     setChildren(x);
-    dataCargada=true
+    dataCargada=true;
   })
   .catch(
       (error) => { 
@@ -135,7 +136,6 @@ function getListadoChildren(setChildren){
 
 function Child() {
   const [children, setChildren] = React.useState([])
-  console.log(children)
   if(!dataCargada){getListadoChildren(setChildren)}
   const [childrenToEdit, setChildrenToEdit] = React.useState({})
 
@@ -189,7 +189,8 @@ function Child() {
       <Container fluid>
       
       <div class="d-flex justify-content-between align-items-center">
-      <button type="button" className="btn btn-primary py-2" onClick={() => { createChildren() }} 
+      <button type="button" className="btn btn-primary py-2"
+      onClick={() => { createChildren(setChildren); }} 
       > Agregar </button>
 
       <button type="button" 
