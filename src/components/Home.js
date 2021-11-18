@@ -1,8 +1,7 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import MenuIcon from '@material-ui/icons/Menu';
-import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios';
 import MainIcon from '@material-ui/icons/ChildCare';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -19,6 +18,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import CarouselItem from 'react-bootstrap/CarouselItem';
 import { useHistory } from "react-router-dom";
 import fakeData from "../data"
+import Moment from 'moment';
 
 function Copyright() {
   return (
@@ -80,10 +80,69 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function formatDate(fecha) {
+  try{
+    Moment.lang('es', {
+      months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Dciciembre'.split('_')
+    })
+    return Moment(fecha).format('D MMMM YYYY').replaceAll(' ', ' de ');
+  }catch{
+    return ""
+  }
+}
+
+const url = process.env.REACT_APP_BACKEND_URL;
+var dataCargada=false;
+
+const getNews = (setNews) => {
+  var header = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  axios.get(url+"api/info?type=news", header)
+    .then((response) => {
+      if(response.data.data.total > 0){
+        setNews(response.data.data.docs.slice(0,6));
+        dataCargada=true
+      }else{
+        setNews([])
+      }
+    })
+    .catch(error => { 
+      console.log("Error al traer Novedades");
+    }
+  )
+}
+
+//Load Info data realted to News
+const getInfo = (setInfo) => {
+  var header = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
+  axios.get(url+"api/info?type=info", header)
+    .then((response) => {
+      if(response.data.data.total > 0){
+        setInfo(response.data.data.docs.slice(0,6));
+        dataCargada=true
+      }else{
+        setInfo([])
+      }
+    })
+    .catch(error => { 
+      console.log("Error al traer Info");
+    }
+  )
+}
+
 export default function Album() {
   const classes = useStyles();
   const history = useHistory();
 
+  const [info, setInfo] = React.useState([]);
+  const [news, setNews] = React.useState([]);
 
   return (
     <React.Fragment>
@@ -136,34 +195,36 @@ export default function Album() {
         </div>
 
         {/* News container */}
-        <Container className={classes.cardGrid} maxWidth="md">
-          <Grid container spacing={4}>
-            {fakeData.news.map((card) => (
-              <Grid item key={`item-${card.id}`} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia} image={'.' + card.img} title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography className={classes.title} color="textSecondary" variant="body2" component="p" gutterBottom>
-                      {card.date}
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.title}
-                    </Typography>
-                    <Typography>
-                      {card.description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      {card.button}
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+        <Container className={classes.cardGrid} maxWidth="md" onLoad={() => { dataCargada=false; console.log(news); getNews(setNews);}}>
+          {news.length!==0? (
+            <Grid container spacing={4}>
+              {news.map((card) => (
+                <Grid item key={`item-${card._id}`} xs={12} sm={6} md={4}>
+                  <Card className={classes.card}>
+                    <CardMedia
+                      className={classes.cardMedia} image={card.imgUrl} title="Image title"
+                    />
+                    <CardContent className={classes.cardContent}>
+                      <Typography className={classes.title} color="textSecondary" variant="body2" component="p" gutterBottom>
+                        {formatDate(card.date)}
+                      </Typography>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {card.title}
+                      </Typography>
+                      <Typography>
+                        {card.description}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small" color="primary">
+                        {card.button}
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          ):(<>{getNews(setNews)}</>)}
         </Container>
 
         {/* Carrousel container */}
@@ -184,29 +245,32 @@ export default function Album() {
           <Typography id="servicios" gutterBottom variant="h5" component="h2">
             Nuestros Servicios:  <br />
           </Typography>
-          <Grid container spacing={4}>
-            {fakeData.info.map((card) => (
-              <Grid item key={card.id} xs={20} sm={6} md={4}>
-                <Card className={classes.root} variant="outlined">
-                  <CardMedia
-                    className={classes.cardMedia} image={card.img} title="Image title"
-                  />
-                  <CardContent>
-                    <Typography variant="h5" component="h2">
-                      {card.title}
-                    </Typography>
-                    <br />
-                    <Typography variant="body2" component="p">
-                      {card.description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button variant="outlined" color="primary" size="small">{card.button}</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+
+          {info.length!==0? (
+            <Grid container spacing={4}>
+              {info.map((card) => (
+                <Grid item key={card._id} xs={20} sm={6} md={4}>
+                  <Card className={classes.root} variant="outlined">
+                    <CardMedia
+                      className={classes.cardMedia} image={card.imgUrl} title="Image title"
+                    />
+                    <CardContent>
+                      <Typography variant="h5" component="h2">
+                        {card.title}
+                      </Typography>
+                      <br />
+                      <Typography variant="body2" component="p">
+                        {card.description}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button variant="outlined" color="primary" size="small">{card.button}</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          ):(<>{getInfo(setInfo)}</>)}
         </Container>
       </main>
       {/* Footer */}

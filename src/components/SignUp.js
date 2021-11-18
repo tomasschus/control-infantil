@@ -73,10 +73,24 @@ export default function SignUp() {
       "telephone":data.telephone.current.value
     }
     console.log(body)
-    axios.post(url+"api/users/registration", body)
+    //Create new account
+    axios.post(url+"api/users", body)
       .then((response) => {
         console.log(response.data)
         sessionStorage.setItem("token",response.data.createdUser);
+        //Send notification
+        var _body = {
+          "action": 'create',
+          "email": data.email.current.value,
+        }
+        axios.post(url+"api/notifications/send", _body).then((response) => {
+          console.log(response)
+        })
+        .catch(error => { 
+          alert("Este mail ya está registrado");
+        })
+        
+        //Redirect
         history.push("/control/children");
       })
       .catch(
