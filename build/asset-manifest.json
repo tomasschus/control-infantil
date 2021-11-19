@@ -1,0 +1,43 @@
+{
+  "files": {
+    "main.css": "/control-infantil/static/css/main.48c935b2.chunk.css",
+    "main.js": "/control-infantil/static/js/main.3c9f8731.chunk.js",
+    "main.js.map": "/control-infantil/static/js/main.3c9f8731.chunk.js.map",
+    "runtime-main.js": "/control-infantil/static/js/runtime-main.28e53908.js",
+    "runtime-main.js.map": "/control-infantil/static/js/runtime-main.28e53908.js.map",
+    "static/css/2.96585ff6.chunk.css": "/control-infantil/static/css/2.96585ff6.chunk.css",
+    "static/js/2.a1f59142.chunk.js": "/control-infantil/static/js/2.a1f59142.chunk.js",
+    "static/js/2.a1f59142.chunk.js.map": "/control-infantil/static/js/2.a1f59142.chunk.js.map",
+    "static/js/3.39915ddb.chunk.js": "/control-infantil/static/js/3.39915ddb.chunk.js",
+    "static/js/3.39915ddb.chunk.js.map": "/control-infantil/static/js/3.39915ddb.chunk.js.map",
+    "index.html": "/control-infantil/index.html",
+    "static/css/2.96585ff6.chunk.css.map": "/control-infantil/static/css/2.96585ff6.chunk.css.map",
+    "static/css/main.48c935b2.chunk.css.map": "/control-infantil/static/css/main.48c935b2.chunk.css.map",
+    "static/js/2.a1f59142.chunk.js.LICENSE.txt": "/control-infantil/static/js/2.a1f59142.chunk.js.LICENSE.txt",
+    "static/js/main.3c9f8731.chunk.js.LICENSE.txt": "/control-infantil/static/js/main.3c9f8731.chunk.js.LICENSE.txt",
+    "static/media/background.jpg": "/control-infantil/static/media/background.fa641ea0.jpg",
+    "static/media/all.min.css": "/control-infantil/static/media/fa-solid-900.f4f93856.woff",
+    "static/media/face-1.jpg": "/control-infantil/static/media/face-1.13a31bf5.jpg",
+    "static/media/face-2.jpg": "/control-infantil/static/media/face-2.46afde83.jpg",
+    "static/media/face-3.jpg": "/control-infantil/static/media/face-3.62232de2.jpg",
+    "static/media/face-4.jpg": "/control-infantil/static/media/face-4.dd7d022c.jpg",
+    "static/media/face-7.jpg": "/control-infantil/static/media/face-7.0b69d7dd.jpg",
+    "static/media/girl-0.jpg": "/control-infantil/static/media/girl-0.743da231.jpg",
+    "static/media/light-bootstrap-dashboard-react.scss?v=2.0.0": "/control-infantil/static/media/nucleo-icons.e8827b8a.svg",
+    "static/media/photo-1431578500526-4d9613015464.jpeg": "/control-infantil/static/media/photo-1431578500526-4d9613015464.0c528dc7.jpeg",
+    "static/media/reactlogo.png": "/control-infantil/static/media/reactlogo.55f6660b.png",
+    "static/media/sidebar-1.2ea74e53.jpg": "/control-infantil/static/media/sidebar-1.2ea74e53.jpg",
+    "static/media/sidebar-2.00b17713.jpg": "/control-infantil/static/media/sidebar-2.00b17713.jpg",
+    "static/media/sidebar-3.9992d0ce.jpg": "/control-infantil/static/media/sidebar-3.9992d0ce.jpg",
+    "static/media/sidebar-4.b7eb4d1b.jpg": "/control-infantil/static/media/sidebar-4.b7eb4d1b.jpg",
+    "static/media/tim_vector.jpe": "/control-infantil/static/media/tim_vector.f969b265.jpe",
+    "static/media/user.png": "/control-infantil/static/media/user.178d03ca.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.28e53908.js",
+    "static/css/2.96585ff6.chunk.css",
+    "static/js/2.a1f59142.chunk.js",
+    "static/css/main.48c935b2.chunk.css",
+    "static/js/main.3c9f8731.chunk.js"
+  ]
+}
