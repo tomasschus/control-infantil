@@ -25,13 +25,15 @@ function calcularEdad(fecha) {
     var hoy = new Date();
     var cumpleanos = (fecha).split("-");
     var edad = hoy.getFullYear() - parseInt(cumpleanos[0]);
-    var m = hoy.getMonth() - parseInt(cumpleanos[1]);
-
-    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-        edad--;
+    // Si no ha llegado su cumpleaños le restamos el año por cumplir
+    if (cumpleanos[0] > (hoy.getMonth()) || cumpleanos[2] > hoy.getDay()){edad--}
+    if(edad === 1){
+      return edad + " año";
+    }else if(edad === 0){
+      return (hoy.getMonth() - parseInt(cumpleanos[1])) + " meses";
+    }else {
+      return edad + " años";
     }
-
-    return edad;
   }catch{
     return ""
   }
@@ -221,11 +223,11 @@ function Child() {
                 <div className="author">
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
                     {child.gender=="Masculino"? (<img alt="..." className="avatar border-gray" src={require("assets/img/nino.png").default}></img>):
-                    (<img alt="..." className="avatar border-gray" src={require("assets/img/nina.png").default}></img>)}
+                    (<img alt="..." className="avatar border-gray" src="https://memegenerator.net/img/images/300x300/11311151.jpg"></img>)}
                     
                     <h5 className="title">{child.name} {child.surname}</h5>
                   </a>
-                  <p className="description">{calcularEdad(child.birthday)} años</p>
+                  <p className="description">{calcularEdad(child.birthday)}</p>
                 </div>
               </Card.Body>
               <hr></hr>
