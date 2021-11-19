@@ -32,7 +32,7 @@ function calcularEdad(fecha) {
   }
 }
 
-function getListadoChildren(setChildren){
+function getListadoChildren(setChildren, dataCargada){
   var header = {
     headers: {
       'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ function getListadoChildren(setChildren){
   .then((response) => {
     var x = (response["data"]["data"])
     setChildren(x)
-
+    dataCargada = true;
     childrenSelected=true;
   })
   .catch(
@@ -159,8 +159,10 @@ function Percentiles() {
     )
   }
 
-  if(!childrenSelected){
-    getListadoChildren(setChildren);
+  var dataCargada = false
+
+  if(!dataCargada){
+    getListadoChildren(setChildren, dataCargada);
   }
 
   return (

@@ -15,10 +15,9 @@ import {
 
 const url = process.env.REACT_APP_BACKEND_URL
 
-var dataCargada = false
 var dataHistorial = false
 
-const getListadoChildrenfunction = (setChildren) => {
+const getListadoChildrenfunction = (setChildren, dataCargada) => {
   var header = {
     headers: {
       'Content-Type': 'application/json',
@@ -46,9 +45,10 @@ function History() {
   const [controls, setControls] = React.useState([])
 
   var childrenSelected = "";
+  var dataCargada = false;
   
   if(!dataCargada){
-    getListadoChildrenfunction(setChildren);
+    getListadoChildrenfunction(setChildren, dataCargada);
   }
 
   function getControls(){
