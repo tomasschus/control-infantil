@@ -2,11 +2,8 @@ import React from "react";
 
 // react-bootstrap components
 import {
-  Badge,
   Button,
   Card,
-  Navbar,
-  Nav,
   Container,
   Row,
   Col,
@@ -28,13 +25,13 @@ function VaccineCalendar() {
           {fakeData.childrenSelected.map((child) => (
             <Card key="child.id" className="card-child-selected">
               <div className="card-image">
-                <img alt="..." src={ require("assets/img/background.jpg") .default }></img>
+                <img alt="..." src={ require("assets/img/background.jpg") .default}></img>
               </div>
 
               <Card.Body>
                 <div className="author">
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <img alt="..." className="avatar border-gray" src={ require("assets/img/faces" + child.img) .default }
+                    <img alt="..." className="avatar border-gray" src={ require("assets/img/faces" + child.img) .default}
                     ></img>
                     <h5 className="title">{child.nombre} {child.apellido}</h5>
                   </a>

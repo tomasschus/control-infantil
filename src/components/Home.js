@@ -11,13 +11,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Carousel from 'react-bootstrap/Carousel';
 import CarouselItem from 'react-bootstrap/CarouselItem';
 import { useHistory } from "react-router-dom";
-import fakeData from "../data"
 import Moment from 'moment';
 
 function Copyright() {
@@ -115,6 +114,27 @@ const getNews = (setNews) => {
   )
 }
 
+const getCarrousels = (setCarrousels) => {
+  var header = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  axios.get(url+"api/info?type=carousel", header)
+    .then((response) => {
+      if(response.data.data.total > 0){
+        setCarrousels(response.data.data.docs);
+        dataCargada=true
+      }else{
+        setCarrousels([])
+      }
+    })
+    .catch(error => { 
+      console.log("Error al traer imágenes del carrusel");
+    }
+  )
+}
+
 //Load Info data realted to News
 const getInfo = (setInfo) => {
   var header = {
@@ -143,6 +163,7 @@ export default function Album() {
 
   const [info, setInfo] = React.useState([]);
   const [news, setNews] = React.useState([]);
+  const [carrousels, setCarrousels] = React.useState([]);
 
   return (
     <React.Fragment>
@@ -195,7 +216,7 @@ export default function Album() {
         </div>
 
         {/* News container */}
-        <Container className={classes.cardGrid} maxWidth="md" onLoad={() => { dataCargada=false; console.log(news); getNews(setNews);}}>
+        <Container className={classes.cardGrid} maxWidth="md" onLoad={() => { dataCargada=false; getNews(setNews);}}>
           {news.length!==0? (
             <Grid container spacing={4}>
               {news.map((card) => (
@@ -228,15 +249,17 @@ export default function Album() {
         </Container>
 
         {/* Carrousel container */}
-        <Container className={classes.root} maxWidth="md">
-          <Carousel>
-            {fakeData.images.map((card) => (
-              <CarouselItem>
-                <img className={`d-block w-90 ${classes.carousel}`} src={'.' + card.img} alt="First slide"
-                />
-              </CarouselItem>
-            ))}
-          </Carousel>
+        <Container className={classes.root} maxWidth="md" onLoad={() => { dataCargada=false; getCarrousels(setCarrousels);}}>
+        {carrousels.length!==0? (
+            <Carousel>
+              {carrousels.map((card) => (
+                <CarouselItem>
+                  <img key={`carousel-${card._id}`} className={`d-block w-90 ${classes.carousel}`} src={card.imgUrl} alt="First slide"
+                  />
+                </CarouselItem>
+              ))}
+            </Carousel>
+          ):(<>{getCarrousels(setCarrousels)}</>)}
         </Container>
 
         {/* Info container */}

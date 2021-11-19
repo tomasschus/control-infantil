@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 import axios from "axios";
 import ChartistGraph from "react-chartist";
 // react-bootstrap components
@@ -121,11 +121,8 @@ const [altura, setAltura] = React.useState({})
           }
         }
       }
-      console.log(edadChild)
-      
 
       var rango = parseInt(edadChild)
-      console.log('Edad: ' + edadChild)
       if(rango === undefined){//meses
         const mes = parseInt(edadChild.replace('M',''))//rangoEdad[i]
         if(mes >= 0 && mes <= 3){

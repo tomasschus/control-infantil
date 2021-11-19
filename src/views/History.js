@@ -3,11 +3,8 @@ import axios from "axios";
 
 // react-bootstrap components
 import {
-  Badge,
   Button,
   Card,
-  Navbar,
-  Nav,
   Table,
   Container,
   Row,
@@ -15,8 +12,6 @@ import {
   OverlayTrigger,
   Tooltip,
 } from "react-bootstrap";
-
-import fakeData from "../data"
 
 const url = process.env.REACT_APP_BACKEND_URL
 var dataCargada = false
@@ -56,7 +51,6 @@ function History() {const url = process.env.REACT_APP_BACKEND_URL
   }
 
   function getControls(){
-    console.log("controls")
     var header = {
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +63,6 @@ function History() {const url = process.env.REACT_APP_BACKEND_URL
     axios.post(url+"api/controls/find", body , header)
     .then((response) => {
       setControls(response["data"]["data"])
-      console.log(response["data"]["data"])
     })
     .catch(
         (error) => { 

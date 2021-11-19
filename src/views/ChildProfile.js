@@ -4,13 +4,10 @@ import NotificationAlert from "react-notification-alert";
 import axios from "axios";
 // react-bootstrap components
 import {
-  Badge,
   Button,
   Card,
   Modal,
   Form,
-  Navbar,
-  Nav,
   Container,
   Row,
   Col,
@@ -50,7 +47,6 @@ function deleteChildren( child,setChildren ){
   axios.delete(url+"api/children/"+child._id , header)
   .then((response) => {
     alert("Niño eliminado satisfactoriamente")
-    console.log(response)
     getListadoChildren(setChildren)
   })
   .catch(
@@ -61,7 +57,6 @@ function deleteChildren( child,setChildren ){
 }
 
 function actualizarChildren(childrenToEdit, setChildrenToEdit, setChildren){
-  console.log(childrenToEdit)
   var header = {
     headers: {
       'Content-Type': 'application/json',
@@ -72,7 +67,6 @@ function actualizarChildren(childrenToEdit, setChildrenToEdit, setChildren){
   axios.put(url+"api/children", childrenToEdit , header)
   .then((response) => {
     alert("Datos actualizados")
-    console.log(response)
     getListadoChildren(setChildren)
   })
   .catch(
@@ -197,7 +191,7 @@ function Child() {
 
       <button type="button" 
       className="btn btn-warning py-2 ml-auto" 
-      onClick={() => { dataCargada=false; console.log(children); getListadoChildren(setChildren);}}
+      onClick={() => { dataCargada=false; getListadoChildren(setChildren);}}
       > Actualizar</button>
 
       {!dataCargada?(
@@ -222,8 +216,11 @@ function Child() {
               <Card.Body>
                 <div className="author">
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    {child.gender=="Masculino"? (<img alt="..." className="avatar border-gray" src={require("assets/img/nino.png").default}></img>):
-                    (<img alt="..." className="avatar border-gray" src="https://memegenerator.net/img/images/300x300/11311151.jpg"></img>)}
+                    {child.imageName!==null ?
+                    (<img alt="..." className="avatar border-gray" src={child.imageName}></img>):
+                    (child.gender=="Masculino" ?
+                    (<img alt="..." className="avatar border-gray" src={require("assets/img/nino.png").default}></img>) :
+                    (<img alt="..." className="avatar border-gray" src="https://memegenerator.net/img/images/300x300/11311151.jpg"></img>))}
                     
                     <h5 className="title">{child.name} {child.surname}</h5>
                   </a>
@@ -262,7 +259,6 @@ function Child() {
                     onClick={() => 
                     {setShowModal(true); 
                     setChildrenToEdit( child )
-                    console.log(childrenToEdit);
                   }
                     }                    
                     > <i className="fa fa-edit"></i>

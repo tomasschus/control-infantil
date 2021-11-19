@@ -72,11 +72,9 @@ export default function SignUp() {
       "password":data.password.current.value,
       "telephone":data.telephone.current.value
     }
-    console.log(body)
     //Create new account
     axios.post(url+"api/users", body)
       .then((response) => {
-        console.log(response.data)
         sessionStorage.setItem("token",response.data.createdUser);
         sessionStorage.setItem("email",data.email.current.value )
         //Send notification

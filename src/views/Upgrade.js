@@ -1,16 +1,8 @@
 import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
-import fakeData from "../data"
 import axios from "axios";
 // react-bootstrap components
 import {
-  Badge,
-  Button,
-  Card,
-  Navbar,
-  Nav,
-  Table,
   Container,
   Row,
   Col,
@@ -41,12 +33,9 @@ function getListadoChildren(setChildren){
   )
 }
 
-
-
 function prepararChildren(newControl,setNewControl,children, MedicamentosRecetados){
   if(newControl.nameChild!=null){for( var i in children ) {
     if(children[i].name+" "+children[i].surname === newControl.nameChild){
-      console.log(children[i]._id)
       setNewControl({...newControl, childId:children[i]._id, prescription:MedicamentosRecetados})
     }
   }}
@@ -62,8 +51,6 @@ function Upgrade() {
 
   const updateFieldChanged = (event, name, index) => {
     var newArr = [...MedicamentosRecetados]
-    console.log("function:")
-    console.log(newArr)
     newArr[index] = { ...newArr[index], [name]: event.target.value };
     
     setMedicamentosRecetados( newArr);
@@ -92,18 +79,14 @@ function Upgrade() {
           "x-access-token":sessionStorage.getItem("token")
         }
       } 
-      axios.post(url+"api/controls", newControl , header)
-      .then((response) => {
+      axios.post(url+"api/controls", newControl , header).then((response) => {
         alert("Control guardado")
       })
-      .catch(
-          (error) => { 
-            alert(error);
-          }
+      .catch((error) => { 
+          alert(error);
+        }
       )
-        console.log(newControl)
-      }
-    else{
+    }else{
       alert("debes completar los campos requeridos")
     }
     
