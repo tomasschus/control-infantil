@@ -20,24 +20,26 @@ import {
 
 const url = process.env.REACT_APP_BACKEND_URL
 
-function calcularEdad(fecha) {
-  try{
-    var hoy = new Date();
-    var cumpleanos = (fecha).split("-");
-    var edad = hoy.getFullYear() - parseInt(cumpleanos[0]);
-    // Si no ha llegado su cumpleaños le restamos el año por cumplir
-    if (cumpleanos[0] > (hoy.getMonth()) || cumpleanos[2] > hoy.getDay()){edad--}
-    if(edad === 1){
-      return edad + " año";
-    }else if(edad === 0){
-      return (hoy.getMonth() - parseInt(cumpleanos[1])) + " meses";
-    }else {
-      return edad + " años";
-    }
-  }catch{
-    return ""
+
+
+function calcularEdad (fecha) {
+  var cumpleanos = (fecha).split("-");
+  var birthDate = new Date(cumpleanos[1]+'/'+cumpleanos[2]+'/'+cumpleanos[0]);
+  var otherDate = new Date();
+
+  var years = (otherDate.getFullYear() - birthDate.getFullYear());
+
+  if (otherDate.getMonth() < birthDate.getMonth() || 
+      otherDate.getMonth() == birthDate.getMonth() && otherDate.getDate() < birthDate.getDate()) {
+      years--;
   }
+
+  if(years===0){
+    return (otherDate.getMonth()-birthDate.getMonth()) + " meses";
+  }
+  return years + " años";
 }
+
 
 function deleteChildren( child,setChildren ){
   var header = {
@@ -313,12 +315,7 @@ function Child() {
         <Modal.Body className="text-center">
           <Form>
             <Row>
-              <Col className="pr-1" md="12">
-                <Form.Group>
-                  <label>Foto de perfil </label> <br/>
-                  <input type="file" />
-                </Form.Group>
-              </Col>
+              
               <Col className="pr-1" md="6">
                 <Form.Group>
                   <label>Nombre</label>

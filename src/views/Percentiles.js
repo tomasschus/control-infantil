@@ -10,7 +10,6 @@ import {
 } from "react-bootstrap";
 
 const url = process.env.REACT_APP_BACKEND_URL
-
 const rangoEdad = ["0M", "3M", "6M", "9M", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"]
 const seriesAltura = [60.06, 60.44, 66.81, 71.1, 75.08, 86.68, 94.62, 102.11, 109.11, 115.4, 120.4, 126.18, 131.71, 136.53, 141.53, 146.23, 156.05, 160.92, 168.21, 171.4, 173.23, 174.1]
 const seriesPeso = [3.47, 6.26, 8.02, 9.24, 10.15, 12.7, 14.84, 16.9, 19.06, 21.4, 23.26, 25.64, 28.6, 32.22, 36.51, 41.38, 46.68, 52.15, 57.49, 62.27, 66.03, 68.19]
@@ -32,7 +31,7 @@ function calcularEdad(fecha) {
   }
 }
 
-function getListadoChildren(setChildren){
+function getListadoChildren(setChildren,dataCargada){
   var header = {
     headers: {
       'Content-Type': 'application/json',
@@ -47,7 +46,7 @@ function getListadoChildren(setChildren){
     var x = (response["data"]["data"])
     setChildren(x)
 
-    childrenSelected=true;
+    dataCargada=true;
   })
   .catch(
       (error) => { 
@@ -62,8 +61,8 @@ function Percentiles() {
   const [children, setChildren] = React.useState([])
   const [control, setControl] = React.useState([])
 
-const [peso, setPeso] = React.useState({})
-const [altura, setAltura] = React.useState({})
+  const [peso, setPeso] = React.useState({})
+  const [altura, setAltura] = React.useState({})
 
   
   var posicionAltura = [seriesAltura.length]
@@ -161,8 +160,9 @@ const [altura, setAltura] = React.useState({})
     )
   }
 
-  if(!childrenSelected){
-    getListadoChildren(setChildren);
+  var dataCargada = false;
+  if(!dataCargada){
+    getListadoChildren(setChildren, dataCargada);
   }
 
   return (
