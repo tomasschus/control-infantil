@@ -220,8 +220,9 @@ function Child() {
               <Card.Body>
                 <div className="author">
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <img alt="..." className="avatar border-gray" src={require("assets/img/background.jpg").default}
-                    ></img>
+                    {child.gender=="Masculino"? (<img alt="..." className="avatar border-gray" src={require("assets/img/nino.png").default}></img>):
+                    (<img alt="..." className="avatar border-gray" src={require("assets/img/nina.png").default}></img>)}
+                    
                     <h5 className="title">{child.name} {child.surname}</h5>
                   </a>
                   <p className="description">{calcularEdad(child.birthday)} años</p>
@@ -347,7 +348,7 @@ function Child() {
                   onChange={ (e)=> { setChildrenToEdit({
                     ...childrenToEdit,
                     gender: e.target.value
-                  }) }} 
+                  }); }} 
                    value={childrenToEdit.gender} aria-label=".form-select-lg example">
                     <option selected>Seleccione</option>
                     <option value="Masculino">Masculino</option>
