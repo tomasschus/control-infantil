@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 // react-bootstrap components
 import {
@@ -17,7 +18,65 @@ import {
 
 import fakeData from "../data"
 
-function History() {
+const url = process.env.REACT_APP_BACKEND_URL
+var dataCargada = false
+
+const getListadoChildrenfunction = (setChildren) => {
+  var header = {
+    headers: {
+      'Content-Type': 'application/json',
+      "x-access-token":sessionStorage.getItem("token")
+    }
+  }
+  var body = {
+    "email":sessionStorage.getItem("email")
+  }
+  axios.post(url+"api/children/find", body , header)
+  .then((response) => {
+    var x = (response["data"]["data"])
+    setChildren(x);
+    dataCargada=true
+  })
+  .catch(
+      (error) => { 
+        alert(error);
+      }
+  )
+}
+
+function History() {const url = process.env.REACT_APP_BACKEND_URL
+  var dataCargada = false
+  const [children, setChildren] = React.useState([])
+  const [controls, setControls] = React.useState([])
+
+  var childrenSelected = "";
+  
+  if(!dataCargada){
+    getListadoChildrenfunction(setChildren);
+  }
+
+  function getControls(){
+    console.log("controls")
+    var header = {
+      headers: {
+        'Content-Type': 'application/json',
+        "x-access-token":sessionStorage.getItem("token")
+      }
+    }
+    var body = {
+      id:childrenSelected
+    }
+    axios.post(url+"api/controls/find", body , header)
+    .then((response) => {
+      setControls(response["data"]["data"])
+    })
+    .catch(
+        (error) => { 
+          alert(error);
+        }
+    )
+  }
+
   return (
     <>
       <Container fluid>
@@ -31,51 +90,41 @@ function History() {
                 </p>
               </Card.Header>
               <div class="pt-4">
-                  <select class="custom-select  form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                  <select onChange={ (e)=> { 
+                     childrenSelected = e.target.value;getControls(); }} 
+                  class="custom-select  form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                     <option selected>Todos los hijos</option>
                     {
-                      fakeData.children.map( (child)=>(
-                        <option value="1">{child.nombre} </option>
+                      children.map( (child)=>(
+                        <option value={child._id}>{child.name} </option>
                        ) )
                     }
                   </select>
                 </div>
-              <Card.Body className="table-full-width table-responsive px-0">
+                <Card.Body className="table-full-width table-responsive px-0">
+                <p>Controles Medicos:</p>
                 <Table className="table-hover">
                   <thead>
                     <tr>
-                      <th className="border-0">ID</th>
                       <th className="border-0">Fecha</th>
                       <th className="border-0">Lugar</th>
-                      <th className="border-0">Vacunas</th>
-                      <th className="border-0">Notas</th>
+                      <th className="border-0">Peso</th>
+                      <th className="border-0">Diametro <br/> Cabeza</th>
+                      <th className="border-0">Altura</th>
+                      <th className="border-0">Observaciones</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {fakeData.history.map((item,index) => (
+                    {controls.map((item) => (
                       <tr>
-                        <td>{item.id}</td>
-                        <td>{item.date}</td>
-                        <td>{item.site}</td>
+                        <td>{item.date.split("T")[0]}</td>
+                        <td>{item.place}</td>
+                        <td>{item.weight}</td>
                         <td>
-
-                          {item.vaccines !== 0 && 
-                              <OverlayTrigger
-                              overlay={
-                                <Tooltip id="tooltip-488980961">
-                                  COD.111 - EDAS
-                                </Tooltip>
-                              }
-                            >
-                              <Button
-                                className="btn-simple btn-link p-1"
-                                type="button"
-                                variant="link"
-                              >
-                                <i className="nc-icon nc-favourite-28"></i>
-                              </Button>
-                            </OverlayTrigger>
-                          }
+                          {item.diameter}
+                        </td>
+                        <td>
+                          {item.height}
                         </td>
                         <td>
                           {item.notes !== 0 && 
@@ -101,6 +150,8 @@ function History() {
                   </tbody>
                 </Table>
               </Card.Body>
+              <br/>
+              
             </Card>
           </Col>
         </Row>

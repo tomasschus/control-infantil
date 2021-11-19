@@ -41,6 +41,8 @@ function getListadoChildren(setChildren){
   )
 }
 
+
+
 function prepararChildren(newControl,setNewControl,children, MedicamentosRecetados){
   if(newControl.nameChild!=null){for( var i in children ) {
     if(children[i].name+" "+children[i].surname === newControl.nameChild){
@@ -48,7 +50,6 @@ function prepararChildren(newControl,setNewControl,children, MedicamentosRecetad
     }
   }}
 }
-
 var dataCargada = false
 
 function Upgrade() {
@@ -67,6 +68,8 @@ function Upgrade() {
     setMedicamentosRecetados( newArr);
   };
 
+ 
+
   function guardar(e){
     e.preventDefault()
     
@@ -82,8 +85,23 @@ function Upgrade() {
       newControl.prescription = MedicamentosRecetados
 
      // falta guardar en BD datos
-      console.log(newControl)
-    }
+      var header = {
+        headers: {
+          'Content-Type': 'application/json',
+          "x-access-token":sessionStorage.getItem("token")
+        }
+      } 
+      axios.post(url+"api/controls", newControl , header)
+      .then((response) => {
+        alert("Control guardado")
+      })
+      .catch(
+          (error) => { 
+            alert(error);
+          }
+      )
+        console.log(newControl)
+      }
     else{
       alert("debes completar los campos requeridos")
     }
@@ -97,7 +115,9 @@ function Upgrade() {
           <Col className="ml-auto mr-auto" md="11">
             <form>
               <div className="d-flex">
-                 <button class="btn btn-success m-auto" onClick={(e)=>{
+                 <button 
+                 className="btn btn-success m-auto"
+                 onClick={(e)=>{
                    prepararChildren(newControl,setNewControl,children,MedicamentosRecetados);
                    guardar(e);
                    }}> Guardar </button>
