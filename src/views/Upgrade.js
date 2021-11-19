@@ -46,6 +46,7 @@ function getListadoChildren(setChildren){
 function prepararChildren(newControl,setNewControl,children, MedicamentosRecetados){
   if(newControl.nameChild!=null){for( var i in children ) {
     if(children[i].name+" "+children[i].surname === newControl.nameChild){
+      console.log(children[i]._id)
       setNewControl({...newControl, childId:children[i]._id, prescription:MedicamentosRecetados})
     }
   }}

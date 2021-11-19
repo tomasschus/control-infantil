@@ -69,6 +69,7 @@ function History() {const url = process.env.REACT_APP_BACKEND_URL
     axios.post(url+"api/controls/find", body , header)
     .then((response) => {
       setControls(response["data"]["data"])
+      console.log(response["data"]["data"])
     })
     .catch(
         (error) => { 

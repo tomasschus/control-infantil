@@ -78,6 +78,7 @@ export default function SignUp() {
       .then((response) => {
         console.log(response.data)
         sessionStorage.setItem("token",response.data.createdUser);
+        sessionStorage.setItem("email",data.email.current.value )
         //Send notification
         var _body = {
           "action": 'create',
