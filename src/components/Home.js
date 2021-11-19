@@ -114,6 +114,7 @@ const getNews = (setNews) => {
   )
 }
 
+var carruselLoaded=false;
 const getCarrousels = (setCarrousels) => {
   var header = {
     headers: {
@@ -124,7 +125,7 @@ const getCarrousels = (setCarrousels) => {
     .then((response) => {
       if(response.data.data.total > 0){
         setCarrousels(response.data.data.docs);
-        dataCargada=true
+        carruselLoaded=true
       }else{
         setCarrousels([])
       }
@@ -249,7 +250,7 @@ export default function Album() {
         </Container>
 
         {/* Carrousel container */}
-        <Container className={classes.root} maxWidth="md" onLoad={() => { dataCargada=false; getCarrousels(setCarrousels);}}>
+        <Container className={classes.root} maxWidth="md" onLoad={() => { carruselLoaded=false; getCarrousels(setCarrousels);}}>
         {carrousels.length!==0? (
             <Carousel>
               {carrousels.map((card) => (

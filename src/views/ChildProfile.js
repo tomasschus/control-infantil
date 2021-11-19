@@ -1,5 +1,4 @@
 import React from "react";
-import fakeData from "../data"
 import NotificationAlert from "react-notification-alert";
 import axios from "axios";
 // react-bootstrap components
@@ -195,10 +194,9 @@ function Child() {
       > Actualizar</button>
 
       {!dataCargada?(
-        <div class="spinner-border text-warning" role="status"
-        >
-         <span class="sr-only">Loading...</span>
-       </div>
+        <div class="spinner-border text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
       
       ):(<></>)}
       </div>
@@ -312,9 +310,19 @@ function Child() {
               <Col className="pr-1" md="12">
                 <Form.Group>
                   <label>Foto de perfil </label> <br/>
+
+                  <div className="author">
+                    <img alt="Foto de perfil" className="avatar border-gray" src={childrenToEdit.imageName}
+                    style={{
+                      width: "60%",
+                    }}
+                    ></img>
+                  </div>
+
                   <input type="file" />
                 </Form.Group>
               </Col>
+              
               <Col className="pr-1" md="6">
                 <Form.Group>
                   <label>Nombre</label>

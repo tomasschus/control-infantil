@@ -57,14 +57,14 @@ function getListadoChildren(setChildren){
 }
 
 var childrenSelected = "";
+var ultimoControlLoaded = false
 
 function Percentiles() {
   const [children, setChildren] = React.useState([])
   const [control, setControl] = React.useState([])
 
-const [peso, setPeso] = React.useState({})
-const [altura, setAltura] = React.useState({})
-
+  const [peso, setPeso] = React.useState({})
+  const [altura, setAltura] = React.useState({})
   
   var posicionAltura = [seriesAltura.length]
   var posicionPeso = [seriesPeso.length]
@@ -93,6 +93,8 @@ const [altura, setAltura] = React.useState({})
 
       if (x.length === 0) { alert('Historial sin cargar'); return;}
       
+      ultimoControlLoaded = true
+
       const altura = x[x.length-1].height;
       const peso = x[x.length-1].weight;
 
@@ -101,8 +103,7 @@ const [altura, setAltura] = React.useState({})
 
       const edad = calcularEdad(childrenSelected.birthday)
 
-      var edadChild
-      debugger
+      var edadChild;
       for (let i = 0; i <= rangoEdad.length-1; i++){
         var rango = parseInt(rangoEdad[i])
         if(rango === 0){
@@ -224,7 +225,7 @@ const [altura, setAltura] = React.useState({})
               </Card.Footer>
             </Card>
           </Col> ):(<>{ }</>)}
-          
+
           <Col md="4">
             <div className="col">
               <select onChange={ (e)=> { childrenSelected = children[e.target.value]
