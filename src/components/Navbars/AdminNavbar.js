@@ -86,62 +86,6 @@ function Header() {
           <Nav className="nav mr-auto" navbar>
           <Nav.Item>
               <Nav.Link
-                data-toggle="dropdown"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-                className="m-0"
-              >
-                <i className="nc-icon nc-single-copy-04"></i>
-                <span className="d-lg-none ml-1">Nuevo control</span>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link
-                data-toggle="dropdown"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-                className="m-0"
-              >
-                <i className="nc-icon nc-circle-09"></i>
-                <span className="d-lg-none ml-1">Grupo familiar</span>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link
-                className="m-0"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <i className="nc-icon nc-notes"></i>
-                <span className="d-lg-block"> Historial médico</span>
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                className="m-0"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <i className="nc-icon nc-chart-bar-32 "></i>
-                <span className="d-lg-block"> Seguimiento</span>
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
-          <Nav className="ml-auto" navbar>
-            <Nav.Item>
-              <Nav.Link
-                className="m-0"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <i className="nc-icon nc-refresh-02"></i>
-                <span className="no-icon"> Calendario de vacunas</span>
-              </Nav.Link>
-            </Nav.Item>
-            
-            <Nav.Item>
-              <Nav.Link
                 className="m-0"
                 href="#pablo"
                 onClick={(e) => handleLogout(e)}
@@ -149,6 +93,7 @@ function Header() {
                 <span className="no-icon">Salir</span>
               </Nav.Link>
             </Nav.Item>
+            
           </Nav>
         </Navbar.Collapse>
       </Container>
