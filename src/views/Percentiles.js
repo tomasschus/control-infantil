@@ -12,8 +12,17 @@ import {
 const url = process.env.REACT_APP_BACKEND_URL
 
 const rangoEdad = ["0M", "3M", "6M", "9M", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"]
-const seriesAltura = [60.06, 60.44, 66.81, 71.1, 75.08, 86.68, 94.62, 102.11, 109.11, 115.4, 120.4, 126.18, 131.71, 136.53, 141.53, 146.23, 156.05, 160.92, 168.21, 171.4, 173.23, 174.1]
-const seriesPeso = [3.47, 6.26, 8.02, 9.24, 10.15, 12.7, 14.84, 16.9, 19.06, 21.4, 23.26, 25.64, 28.6, 32.22, 36.51, 41.38, 46.68, 52.15, 57.49, 62.27, 66.03, 68.19]
+
+//Percentil niño
+const percentilAlturaNiña = [50.06, 60.44, 66.81, 71.1, 75.08, 86.68, 94.62, 102.11, 109.11, 115.4, 120.4, 126.18, 131.71, 136.53, 141.53, 146.23, 156.05, 160.92, 168.21, 171.4, 173.23, 174.1]
+const percentilPesoNiña = [3.47, 6.26, 8.02, 9.24, 10.15, 12.7, 14.84, 16.9, 19.06, 21.4, 23.26, 25.64, 28.6, 32.22, 36.51, 41.38, 46.68, 52.15, 57.49, 62.27, 66.03, 68.19]
+
+//Percentil niña
+const percentilAlturaNiño = [49.34, 59.18, 65.33, 59.52, 73.55, 85.4, 93.93, 101.33, 108.07, 114.41, 120.54, 126.52, 132.40, 138.11, 142.98, 149.03, 154.14, 157.88, 160.01, 160.68, 160.72, 160.78]
+const percentilPesoNiño = [3.34, 5.79, 7.44, 8.03, 9.60, 12.15, 14.10, 15.15, 17.55, 20.14, 23.27, 26.80, 30.62, 34.61, 38.65, 42.63, 46.43, 49.92, 53, 55.54, 57.43, 58.55]
+
+var seriesAltura = []
+var seriesPeso = []
 
 function calcularEdad(fecha) {
   try{
@@ -47,7 +56,6 @@ function getListadoChildren(setChildren, dataCargada){
     var x = (response["data"]["data"])
     setChildren(x)
     dataCargada = true;
-    childrenSelected=true;
   })
   .catch(
       (error) => { 
@@ -60,11 +68,20 @@ var childrenSelected = "";
 var ultimoControlLoaded = false
 
 function Percentiles() {
+
   const [children, setChildren] = React.useState([])
   const [control, setControl] = React.useState([])
 
   const [peso, setPeso] = React.useState({})
   const [altura, setAltura] = React.useState({})
+
+  if(childrenSelected.gender === 'Femenino'){
+    seriesAltura = percentilAlturaNiña
+    seriesPeso = percentilPesoNiña
+  }else{
+    seriesAltura = percentilAlturaNiño
+    seriesPeso = percentilPesoNiño
+  }
   
   var posicionAltura = [seriesAltura.length]
   var posicionPeso = [seriesPeso.length]
@@ -174,7 +191,7 @@ function Percentiles() {
           <Col md="8">
             <Card>
               <Card.Header>
-                <Card.Title as="h4">Percentiles de crecimiento del menor por PESO</Card.Title>
+                <Card.Title as="h4">Percentiles de crecimiento de{childrenSelected.gender === 'Femenino' ? ' la niña' : 'l niño'} por PESO</Card.Title>
                 <p className="card-category">Control del crecimiento del menor según su clasificación adecuada.</p>
               </Card.Header>
               <Card.Body>
@@ -216,8 +233,7 @@ function Percentiles() {
               <Card.Footer>
                 <div className="legend">
                   <i className="fas fa-circle text-info"></i>Percentil NORMAL entre el 3 y el 97
-                  <i className="fas fa-circle text-danger"></i>Por encima del rango
-                  <i className="fas fa-circle text-warning"></i>Por debajo del rango
+                  <i className="fas fa-circle text-danger"></i>Por fuera del rango
                 </div>
                 <hr></hr>
                 <div className="stats">
@@ -276,7 +292,7 @@ function Percentiles() {
           <Col md="8">
             <Card>
               <Card.Header>
-                <Card.Title as="h4">Percentiles de crecimiento del menor por ALTURA</Card.Title>
+                <Card.Title as="h4">Percentiles de crecimiento de{childrenSelected.gender === 'Femenino' ? ' la niña' : 'l niño'} por ALTURA</Card.Title>
                 <p className="card-category">Control del crecimiento del menor según su clasificación adecuada.</p>
               </Card.Header>
               <Card.Body>
@@ -319,8 +335,7 @@ function Percentiles() {
               <Card.Footer>
                 <div className="legend">
                   <i className="fas fa-circle text-info"></i>Percentil NORMAL entre el 3 y el 97
-                  <i className="fas fa-circle text-danger"></i>Por encima del rango
-                  <i className="fas fa-circle text-warning"></i>Por debajo del rango
+                  <i className="fas fa-circle text-danger"></i>Por fuera del rango
                 </div>
                 <hr></hr>
                 <div className="stats">
