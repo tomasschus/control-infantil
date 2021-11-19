@@ -2,6 +2,7 @@
   "name": "control-infantil",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://tomasschus.github.io/control-infantil/",
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.2",
     "@material-ui/core": "^4.12.3",
@@ -12,6 +13,7 @@
     "axios": "^0.24.0",
     "bootstrap": "4.6.0",
     "chartist": "0.10.1",
+    "gh-pages": "^3.2.3",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
     "moment": "^2.29.1",
@@ -36,6 +38,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
