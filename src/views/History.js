@@ -93,7 +93,7 @@ function History() {const url = process.env.REACT_APP_BACKEND_URL
                   <select onChange={ (e)=> { 
                      childrenSelected = e.target.value;getControls(); }} 
                   class="custom-select  form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                    <option selected>Todos los hijos</option>
+                    <option selected>Seleccione hijo</option>
                     {
                       children.map( (child)=>(
                         <option value={child._id}>{child.name} </option>

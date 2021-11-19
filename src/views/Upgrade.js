@@ -80,7 +80,7 @@ function Upgrade() {
       newControl.height!=null&&
       newControl.diameter!=null&&
       newControl.notes!=null&&
-      newControl.nameChild!=null    
+      newControl.childId!=null    
     ){
       newControl.prescription = MedicamentosRecetados
 
@@ -140,13 +140,13 @@ function Upgrade() {
                    onChange={ (e)=> { 
                      setNewControl({
                     ...newControl,
-                    nameChild: e.target.value
+                    childId: e.target.value
                   }) }} 
                    aria-label=".form-select-lg example">
                     <option selected>Seleccione hijo</option>
                     {
                       children.map( (child)=>(
-                        <option value={child.name +" "+ child.surname}>{child.name +" "+ child.surname} </option>
+                        <option value={child._id}>{child.name +" "+ child.surname} </option>
                        ) )
                     }
                   </select>
