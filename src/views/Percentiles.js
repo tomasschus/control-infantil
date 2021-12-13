@@ -236,10 +236,7 @@ function Percentiles() {
                   <i className="fas fa-circle text-danger"></i>Por fuera del rango
                 </div>
                 <hr></hr>
-                <div className="stats">
-                  <i className="fas fa-history"></i>
-                  Updated 3 minutes ago
-                </div>
+              
               </Card.Footer>
             </Card>
           </Col> ):(<>{ }</>)}
@@ -338,10 +335,7 @@ function Percentiles() {
                   <i className="fas fa-circle text-danger"></i>Por fuera del rango
                 </div>
                 <hr></hr>
-                <div className="stats">
-                  <i className="fas fa-history"></i>
-                  Updated 3 minutes ago
-                </div>
+                
               </Card.Footer>
             </Card>
           </Col>
