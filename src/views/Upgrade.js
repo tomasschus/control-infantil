@@ -207,11 +207,7 @@ function Upgrade() {
                         updateFieldChanged(e,"periodo",MedicamentoRecetado.id) }} id={`periodo-${MedicamentoRecetado.id}`} class="form-control" />
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label for="exampleFormControlFile1">Receta</label>
-                    <input type="file" class="form-control-file" id={`file-${MedicamentoRecetado.id}`} />
-                  </div>
-                  <hr class="py-2" /> <br />
+                  
                 </div>))}
             </form>
           </Col>

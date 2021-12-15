@@ -76,6 +76,44 @@ function VaccineCalendar() {
   getListadoChildrenfunction(setChildren, dataCargada);
   const [hijoSeleccionado, setHijoSeleccionado] = React.useState(false)
 
+  var positionsVacias =  [
+    ['Recién nacido','','','','','','','','','','','','','','','',''],
+    ['2 meses','','','','','','','','','','','','','','','',''],
+    ['4 meses','','','','','','','','','','','','','','','',''],
+    ['6 meses','','','','','','','','','','','','','','','',''],
+    ['12 meses','','','','','','','','','','','','','','','',''],
+    ['15-18 meses','','','','','','','','','','','','','','','',''],
+    ['18 meses','','','','','','','','','','','','','','','',''],
+    ['24 meses','','','','','','','','','','','','','','','',''],
+    ['5-6 años','','','','','','','','','','','','','','','',''],
+    ['11 años','','','','','','','','','','','','','','','',''],
+    ['Desde 15 años','','','','','','','','','','','','','','','',''],
+    ['Adultos','','','','','','','','','','','','','','','',''],
+    ['Embarazadas','','','','','','','','','','','','','','','',''],
+    ['Puerperio','','','','','','','','','','','','','','','',''],
+    ['Personal de salud','','','','','','','','','','','','','','','',''],
+  ]
+
+  
+  var positions = [
+            ['Recién nacido','Única dosis','Dosis neonatal','','','','','','','','','','','','','',''],
+            ['2 meses','','1º dosis','1º dosis','','1º dosis','','','','','','','','','','',''],
+            ['4 meses','','2º dosis','2º dosis','','2º dosis','','','','','','','','','','',''],
+            ['6 meses','','','3º dosis','','3º dosis','','Dosis anual (E)','','','','','','','','',''],
+            ['12 meses','','Refuerzo','','','','1º dosis','Dosis anual (E)','Única dosis','','','','','','','',''],
+            ['15-18 meses','','','','1º refuerzo','4º dosis','','Dosis anual (E)','','','','','','','','',''],
+            ['18 meses','','','','','','','Dosis anual (E)','','','','','','','1º dosis (K)','',''],
+            ['24 meses','','','','','','','Dosis anual (E)','','','','','','','','',''],
+            ['5-6 años','','','','','Refuerzo','2º dosis','','','2º refuerzo','','','','','','',''],
+            ['11 años','Iniciar o completar esquema (C)','','','','','Iniciar o completar esquema (D)','','','','Refuerzo','','3º dosis (mujeres)','','Refuerzo (L)','Única dosis (M)',''],
+            ['Desde 15 años','','','','','','','','','','','','','','','',''],
+            ['Adultos','Iniciar o completar esquema (C)','','','','','Iniciar o completar esquema (D)','','','','','Refuerzo(I)','','Iniciar o completar esquema (D)','Refuerzo (L)','',''],
+            ['Embarazadas','','','','','','','Dosis anual (F)','','','Refuerzo (J)','','','','','','Iniciar o completar esquema (D)'],
+            ['Puerperio','','','','','','','Dosis anual (G)','','','','','','','','','Iniciar o completar esquema (D)'],
+            ['Personal de salud','Iniciar o completar esquema (C)','','','','','','Dosis anual','','','Única dosis (H)','','','Iniciar o completar esquema (D)','','','']
+        ]
+  
+  
   return (
     <>
       <Container fluid>
@@ -187,7 +225,7 @@ function VaccineCalendar() {
                     </tr>
                   </thead>
                   <tbody>
-                    {fakeData.calendar.positions.map((pos, index) => (
+                    {positions.map((pos, index) => (
                       <tr>
                         {pos.map((item) => (
                           <td>
@@ -205,7 +243,7 @@ function VaccineCalendar() {
                                   type="button"
                                   variant="link"
                                 >
-                                  <i className="fas fa-info-circle"></i>
+                                  <i class="fas fa-plus-circle"></i>
                                 </Button>
                               </OverlayTrigger>
                             }
