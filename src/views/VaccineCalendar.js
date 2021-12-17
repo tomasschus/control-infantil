@@ -36,7 +36,7 @@ function calcularEdad (fecha) {
   }
 }
   
-
+var hasGetListadoChildrenfunction=false;
 const getListadoChildrenfunction = (setChildren, dataCargada) => {
   var header = {
     headers: {
@@ -52,6 +52,7 @@ const getListadoChildrenfunction = (setChildren, dataCargada) => {
       var x = (response["data"]["data"])
       dataCargada = true
       setChildren(x);
+      hasGetListadoChildrenfunction = true
     })
     .catch(
       (error) => {
@@ -68,52 +69,139 @@ function searchChild(childrenSelected, children, setChild){
   });
 }
 
+var hasgetAllVacines = false;
+const getAllVacines = (setAllVaccines) => {
+  var header = {
+    headers: {
+      'Content-Type': 'application/json',
+      "x-access-token": sessionStorage.getItem("token")
+    }
+  }
+  
+  axios.get(url + "api/vaccines", header)
+    .then((response) => {
+      hasgetAllVacines = true
+      setAllVaccines(response.data.vaccine)      
+    })
+    .catch(
+      (error) => {
+        alert(error);
+      }
+    )
+}
+
+function aplicarVacuna(vacunaSelected,child,childId,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles){
+  var header = {
+    headers: {
+      'Content-Type': 'application/json',
+      "x-access-token": sessionStorage.getItem("token")
+    }
+  }
+
+  var body = {
+    "childId":child._id,
+    "vaccineId":vacunaSelected
+    }
+  
+  axios.put(url + "api/vaccines/child",body , header)
+    .then((response) => {
+      alert("Vacuna aplicada con éxito")
+      llenarCalendario(childId,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles)
+    })
+    .catch(
+      (error) => {
+        alert(error);
+      }
+    )
+}
+
+function llenarCalendario(childId,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles){
+  var header = {
+    headers: {
+      'Content-Type': 'application/json',
+      "x-access-token": sessionStorage.getItem("token")
+    }
+  }
+
+  var body = {
+    "childId":childId
+  }
+  
+  axios.post(url + "api/vaccines/child",body , header)
+    .then((response) => {
+      var vacunasAux = vacunasDisponibles.slice()
+      var positionsCopy = positions.slice();
+      response.data.data.forEach(vacXchild => {
+        
+        allVaccines.forEach(vacuna => {
+          if(vacXchild.childId!=""&&vacXchild.vaccineId!=""){
+            if(vacuna._id == vacXchild.vaccineId){
+              positionsCopy[vacuna.x][vacuna.y] = vacuna.dosis 
+              var i = -1
+              vacunasAux.forEach(element => {
+                if(element.name + " | " + element.dosis == vacuna.name + " | " + vacuna.dosis){
+                  i = vacunasAux.indexOf(element)
+                }
+              });
+              if(i!=-1){
+                vacunasAux.splice( i, 1 )
+              }
+              setVacunasDisponibles(vacunasAux)
+            }
+          }
+        });
+      });
+      setPositionsState(positionsCopy)
+    })
+    .catch(
+      (error) => {
+        alert(error);
+      }
+    )
+}
+
 function VaccineCalendar() {
   const [children, setChildren] = React.useState([])
   const [child, setChild] = React.useState({})
   var childrenSelected;
   var dataCargada = false;
-  getListadoChildrenfunction(setChildren, dataCargada);
   const [hijoSeleccionado, setHijoSeleccionado] = React.useState(false)
+  
+  const [allVaccines, setAllVaccines] = React.useState([])
 
-  var positionsVacias =  [
-    ['Recién nacido','','','','','','','','','','','','','','','',''],
-    ['2 meses','','','','','','','','','','','','','','','',''],
-    ['4 meses','','','','','','','','','','','','','','','',''],
-    ['6 meses','','','','','','','','','','','','','','','',''],
-    ['12 meses','','','','','','','','','','','','','','','',''],
-    ['15-18 meses','','','','','','','','','','','','','','','',''],
-    ['18 meses','','','','','','','','','','','','','','','',''],
-    ['24 meses','','','','','','','','','','','','','','','',''],
-    ['5-6 años','','','','','','','','','','','','','','','',''],
-    ['11 años','','','','','','','','','','','','','','','',''],
-    ['Desde 15 años','','','','','','','','','','','','','','','',''],
-    ['Adultos','','','','','','','','','','','','','','','',''],
-    ['Embarazadas','','','','','','','','','','','','','','','',''],
-    ['Puerperio','','','','','','','','','','','','','','','',''],
-    ['Personal de salud','','','','','','','','','','','','','','','',''],
+  if (!hasGetListadoChildrenfunction) {getListadoChildrenfunction(setChildren, dataCargada);}
+  if(!hasgetAllVacines){ getAllVacines(setAllVaccines);}
+
+  var vacunaSelected = ""
+
+  const [vacunasDisponibles, setVacunasDisponibles] = React.useState([])
+
+  var header = ['','','','','','','','','','','','','','','','','']
+
+  var positions =  [
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','',''],
   ]
+  const [positionsState, setPositionsState] = React.useState(positions)
 
-  
-  var positions = [
-            ['Recién nacido','Única dosis','Dosis neonatal','','','','','','','','','','','','','',''],
-            ['2 meses','','1º dosis','1º dosis','','1º dosis','','','','','','','','','','',''],
-            ['4 meses','','2º dosis','2º dosis','','2º dosis','','','','','','','','','','',''],
-            ['6 meses','','','3º dosis','','3º dosis','','Dosis anual (E)','','','','','','','','',''],
-            ['12 meses','','Refuerzo','','','','1º dosis','Dosis anual (E)','Única dosis','','','','','','','',''],
-            ['15-18 meses','','','','1º refuerzo','4º dosis','','Dosis anual (E)','','','','','','','','',''],
-            ['18 meses','','','','','','','Dosis anual (E)','','','','','','','1º dosis (K)','',''],
-            ['24 meses','','','','','','','Dosis anual (E)','','','','','','','','',''],
-            ['5-6 años','','','','','Refuerzo','2º dosis','','','2º refuerzo','','','','','','',''],
-            ['11 años','Iniciar o completar esquema (C)','','','','','Iniciar o completar esquema (D)','','','','Refuerzo','','3º dosis (mujeres)','','Refuerzo (L)','Única dosis (M)',''],
-            ['Desde 15 años','','','','','','','','','','','','','','','',''],
-            ['Adultos','Iniciar o completar esquema (C)','','','','','Iniciar o completar esquema (D)','','','','','Refuerzo(I)','','Iniciar o completar esquema (D)','Refuerzo (L)','',''],
-            ['Embarazadas','','','','','','','Dosis anual (F)','','','Refuerzo (J)','','','','','','Iniciar o completar esquema (D)'],
-            ['Puerperio','','','','','','','Dosis anual (G)','','','','','','','','','Iniciar o completar esquema (D)'],
-            ['Personal de salud','Iniciar o completar esquema (C)','','','','','','Dosis anual','','','Única dosis (H)','','','Iniciar o completar esquema (D)','','','']
-        ]
-  
-  
+  // cargo header
+  allVaccines.forEach(element => {
+    header[element["y"]] = element.name
+  });
+
   return (
     <>
       <Container fluid>
@@ -124,6 +212,16 @@ function VaccineCalendar() {
                 childrenSelected = e.target.value;
                 searchChild(childrenSelected, children, setChild);
                 setHijoSeleccionado(true);
+
+                var vacunasaux = []
+                allVaccines.forEach(element => {
+                  if(element.y!=0){ vacunasaux.push(element)}
+                  else{positions[element["x"]][element["y"]] = element.dosis}
+                 });
+                setVacunasDisponibles(vacunasaux)
+
+                llenarCalendario(childrenSelected,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles)
+                
               }}
                 class="custom-select  form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                 <option selected>Seleccione hijo</option>
@@ -200,6 +298,24 @@ function VaccineCalendar() {
                   </Card.Body>
                 </Card>
               </Col>
+              <Col md="3">
+              <select onChange={(e) => {
+                vacunaSelected = e.target.value;
+              }}
+                class="custom-select  form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <option selected>Aplicar vacuna</option>
+                {
+                  vacunasDisponibles.map((vacuna) => (
+                    <option value={vacuna._id}>{vacuna.name + " | " + vacuna.dosis}</option>
+                  ))
+                }
+              </select>
+              <button onClick={(e) =>{
+                aplicarVacuna(vacunaSelected,child,childrenSelected,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles)
+                
+              }
+                } className="btn btn-primary">Aplicar</button>
+              </Col>
             </>
           ) : (<> </>)}
 
@@ -219,34 +335,17 @@ function VaccineCalendar() {
                 <Table className="table-hover table-striped" border="1">
                   <thead>
                     <tr>
-                      {fakeData.calendar.columns.map((col, index) => (
-                        <th className="border-0" width={index === 0 ? '15%' : '8%'}>{col}</th>
+                      {header.map(( i, index) => (
+                        <th className="border-0" width={index === 0 ? '15%' : '8%'}>{i}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
-                    {positions.map((pos, index) => (
+                    {positionsState.map((pos, index) => (
                       <tr>
-                        {pos.map((item) => (
+                        {pos.map((item,index2) => (
                           <td>
-                            {item}
-                            {item !== '' &&
-                              <OverlayTrigger
-                                overlay={
-                                  <Tooltip id="tooltip-488980961">
-                                    {item}
-                                  </Tooltip>
-                                }
-                              >
-                                <Button
-                                  className="btn-simple btn-link p-1"
-                                  type="button"
-                                  variant="link"
-                                >
-                                  <i class="fas fa-plus-circle"></i>
-                                </Button>
-                              </OverlayTrigger>
-                            }
+                            {item}   
                           </td>
                         ))}
                       </tr>
