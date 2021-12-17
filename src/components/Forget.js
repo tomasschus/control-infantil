@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -26,7 +27,7 @@ function Copyright() {
 }
 
 const rdn = Math.floor(1 + Math.random() * (4 - 1));
-
+const url = process.env.REACT_APP_BACKEND_URL
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
@@ -61,10 +62,39 @@ const useStyles = makeStyles((theme) => ({
 export default function Forget() {
   const classes = useStyles();
 
-  const history = useHistory();
-  const handleSubmit = () =>{ 
-    history.push("/forget");
+  var dataUser = {
+    email:useRef(''),
   }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    var header = {
+      headers: {
+        'Content-Type': 'application/json',
+        "x-access-token": sessionStorage.getItem("token")
+      }
+    }
+  
+    var body = {
+      "action":"reset",
+      "email":dataUser.email.current.value
+    }
+    console.log(body)
+    axios.post(url + "api/notifications/send",body , header)
+    .then((response) => {
+      console.log(response)
+        alert("Te enviamos un correo a tu mail!")
+    })
+    .catch(
+        (error) => { 
+          alert("Ocurrió un error");
+         })
+
+  }
+
+  const history = useHistory();
+
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -93,6 +123,7 @@ export default function Forget() {
               name="email"
               autoComplete="email"
               autoFocus
+              inputRef={dataUser.email}
             />
 
 
