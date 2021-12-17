@@ -90,7 +90,7 @@ const getAllVacines = (setAllVaccines) => {
     )
 }
 
-function aplicarVacuna(vacunaSelected,child,childId,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles){
+function aplicarVacuna(vacunaSelected,child,childId,positions,allVaccines,positionsState, setPositionsState){
   var header = {
     headers: {
       'Content-Type': 'application/json',
@@ -105,8 +105,14 @@ function aplicarVacuna(vacunaSelected,child,childId,positions,allVaccines,positi
   
   axios.put(url + "api/vaccines/child",body , header)
     .then((response) => {
-      alert("Vacuna aplicada con éxito")
-      llenarCalendario(childId,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles)
+      console.log(body)
+      console.log(response.data.estado)
+      if(response.data.estado){
+        alert("Vacuna aplicada con éxito")
+        llenarCalendario(childId,positions,allVaccines,positionsState, setPositionsState)
+      }else{
+        alert("Esta vacuna ya esta aplicada")
+      }
     })
     .catch(
       (error) => {
@@ -115,7 +121,7 @@ function aplicarVacuna(vacunaSelected,child,childId,positions,allVaccines,positi
     )
 }
 
-function llenarCalendario(childId,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles){
+function llenarCalendario(childId,positions,allVaccines,positionsState, setPositionsState, ){
   console.log("llenando data de "+childId)
   var header = {
     headers: {
@@ -130,8 +136,6 @@ function llenarCalendario(childId,positions,allVaccines,positionsState, setPosit
   
   axios.post(url + "api/vaccines/child",body , header)
     .then((response) => {
-      console.log(vacunasDisponibles)
-      var vacunasAux = vacunasDisponibles.slice()
       var positionsCopy = positions.slice();
       response.data.data.forEach(vacXchild => {
         
@@ -139,16 +143,7 @@ function llenarCalendario(childId,positions,allVaccines,positionsState, setPosit
           if(vacXchild.childId!=""&&vacXchild.vaccineId!=""){
             if(vacuna._id == vacXchild.vaccineId){
               positionsCopy[vacuna.x][vacuna.y] = vacuna.dosis 
-              var i = -1
-              vacunasAux.forEach(element => {
-                if(element.name + " | " + element.dosis == vacuna.name + " | " + vacuna.dosis){
-                  i = vacunasAux.indexOf(element)
-                }
-              });
-              if(i!=-1){
-                vacunasAux.splice( i, 1 )
-              }
-              setVacunasDisponibles(vacunasAux)
+              
             }
           }
         });
@@ -175,7 +170,8 @@ function VaccineCalendar() {
   if (!hasGetListadoChildrenfunction) {getListadoChildrenfunction(setChildren, dataCargada);}
   if(!hasgetAllVacines){ getAllVacines(setAllVaccines);}
 
-  var vacunaSelected = ""
+  const [vacunaSelected, setVacunaSelected] = React.useState("")
+
 
   const [vacunasDisponibles, setVacunasDisponibles] = React.useState([])
 
@@ -221,12 +217,8 @@ function VaccineCalendar() {
                   if(element.y!=0){ vacunasaux.push(element)}
                   else{positions[element["x"]][element["y"]] = element.dosis}
                  });
-                 
-                //console.log(vacunasaux)
-                //setVacunasDisponibles(vacunasaux.slice())
-
-                console.log(vacunasDisponibles)
-                llenarCalendario(childrenSelected,positions,allVaccines,positionsState, setPositionsState, vacunasaux, setVacunasDisponibles)
+                setVacunasDisponibles(vacunasaux.slice())
+                llenarCalendario(childrenSelected,positions,allVaccines,positionsState, setPositionsState)
                 
               }}
                 class="custom-select  form-select form-select-lg mb-3" aria-label=".form-select-lg example">
@@ -306,7 +298,7 @@ function VaccineCalendar() {
               </Col>
               <Col md="3">
               <select onChange={(e) => {
-                vacunaSelected = e.target.value;
+                setVacunaSelected(e.target.value);
               }}
                 class="custom-select  form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                 <option selected>Aplicar vacuna</option>
