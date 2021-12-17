@@ -116,6 +116,7 @@ function aplicarVacuna(vacunaSelected,child,childId,positions,allVaccines,positi
 }
 
 function llenarCalendario(childId,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles){
+  console.log("llenando data de "+childId)
   var header = {
     headers: {
       'Content-Type': 'application/json',
@@ -129,6 +130,7 @@ function llenarCalendario(childId,positions,allVaccines,positionsState, setPosit
   
   axios.post(url + "api/vaccines/child",body , header)
     .then((response) => {
+      console.log(vacunasDisponibles)
       var vacunasAux = vacunasDisponibles.slice()
       var positionsCopy = positions.slice();
       response.data.data.forEach(vacXchild => {
@@ -164,6 +166,7 @@ function VaccineCalendar() {
   const [children, setChildren] = React.useState([])
   const [child, setChild] = React.useState({})
   var childrenSelected;
+  const [childrenSelected2, setchildrenSelected2] = React.useState()
   var dataCargada = false;
   const [hijoSeleccionado, setHijoSeleccionado] = React.useState(false)
   
@@ -212,15 +215,18 @@ function VaccineCalendar() {
                 childrenSelected = e.target.value;
                 searchChild(childrenSelected, children, setChild);
                 setHijoSeleccionado(true);
-
+                setchildrenSelected2(childrenSelected)
                 var vacunasaux = []
                 allVaccines.forEach(element => {
                   if(element.y!=0){ vacunasaux.push(element)}
                   else{positions[element["x"]][element["y"]] = element.dosis}
                  });
-                setVacunasDisponibles(vacunasaux)
+                 
+                //console.log(vacunasaux)
+                //setVacunasDisponibles(vacunasaux.slice())
 
-                llenarCalendario(childrenSelected,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles)
+                console.log(vacunasDisponibles)
+                llenarCalendario(childrenSelected,positions,allVaccines,positionsState, setPositionsState, vacunasaux, setVacunasDisponibles)
                 
               }}
                 class="custom-select  form-select form-select-lg mb-3" aria-label=".form-select-lg example">
@@ -311,9 +317,12 @@ function VaccineCalendar() {
                 }
               </select>
               <button onClick={(e) =>{
-                aplicarVacuna(vacunaSelected,child,childrenSelected,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles)
                 
-              }
+                  aplicarVacuna(vacunaSelected,child,childrenSelected2,positions,allVaccines,positionsState, setPositionsState, vacunasDisponibles, setVacunasDisponibles)                
+                  allVaccines.forEach(element => {
+                    if(element.y==0){positions[element["x"]][element["y"]] = element.dosis}
+                   });
+                }
                 } className="btn btn-primary">Aplicar</button>
               </Col>
             </>
