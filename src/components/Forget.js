@@ -27,7 +27,7 @@ function Copyright() {
 }
 
 const rdn = Math.floor(1 + Math.random() * (4 - 1));
-const url = process.env.REACT_APP_BACKEND_URL
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
@@ -61,29 +61,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Forget() {
   const classes = useStyles();
-
+  const url = process.env.REACT_APP_BACKEND_URL
   var dataUser = {
     email:useRef(''),
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    var header = {
-      headers: {
-        'Content-Type': 'application/json',
-        "x-access-token": sessionStorage.getItem("token")
-      }
-    }
-  
     var body = {
       "action":"reset",
       "email":dataUser.email.current.value
-    }
-    console.log(body)
-    axios.post(url + "api/notifications/send",body , header)
+    }    
+    
+    axios.post(url + "api/notifications/send",body)
     .then((response) => {
-      console.log(response)
         alert("Te enviamos un correo a tu mail!")
     })
     .catch(
