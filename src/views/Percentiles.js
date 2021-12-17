@@ -41,6 +41,30 @@ function calcularEdad(fecha) {
   }
 }
 
+function formatAge (fecha) {
+  try{var cumpleanos = (fecha).split("-");
+  var birthDate = new Date(cumpleanos[1]+'/'+cumpleanos[2]+'/'+cumpleanos[0]);
+  var otherDate = new Date();
+  
+  var years = (otherDate.getFullYear() - birthDate.getFullYear());
+  
+  if (otherDate.getMonth() < birthDate.getMonth() || 
+    otherDate.getMonth() === birthDate.getMonth() && otherDate.getDate() < birthDate.getDate()) {
+    years--;
+  }
+  
+  if(years === 0){
+    return (otherDate.getMonth()-birthDate.getMonth()) + " meses";
+  }
+  if(years === 1){
+    return years + " año";
+  }
+  return years + " años";
+  }catch{
+    return "años"
+  }
+}
+
 function getListadoChildren(setChildren, dataCargada){
   var header = {
     headers: {
@@ -74,6 +98,8 @@ function Percentiles() {
 
   const [peso, setPeso] = React.useState({})
   const [altura, setAltura] = React.useState({})
+
+  const [hijoSeleccionado, setHijoSeleccionado] = React.useState(false)
 
   if(childrenSelected.gender === 'Femenino'){
     seriesAltura = percentilAlturaNiña
@@ -243,7 +269,8 @@ function Percentiles() {
 
           <Col md="4">
             <div className="col">
-              <select onChange={ (e)=> { childrenSelected = children[e.target.value]
+              <select onChange={ (e)=> { childrenSelected = children[e.target.value];
+                     setHijoSeleccionado(true);
                      getControls(setControl,setPeso,setAltura); }}
                      className="custom-select  form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                 <option defaultValue>Seleccione hijo</option>
@@ -254,6 +281,36 @@ function Percentiles() {
                 }
               </select>
             </div>
+
+            <Col md="12">
+            {
+              hijoSeleccionado ? (
+              <>
+                <Card key="childrenSelected._id" className="card-child">
+                  <div className="card-image">
+                    <img alt="..." src={require("assets/img/background.jpg").default}></img>
+                  </div>
+
+                  <Card.Body>
+                    <div className="author">
+                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                        {childrenSelected.imageName!==null ?
+                        (<img alt="..." className="avatar border-gray" src={childrenSelected.imageName}></img>):
+                        (childrenSelected.gender==="Masculino" ?
+                        (<img alt="..." className="avatar border-gray" src={require("assets/img/nino.png").default}></img>) :
+                        (<img alt="..." className="avatar border-gray" src="https://memegenerator.net/img/images/300x300/11311151.jpg"></img>))}
+                        
+                        <h5 className="title">{childrenSelected.name} {childrenSelected.surname}</h5>
+                      </a>
+                      <p className="description">{formatAge(childrenSelected.birthday)}</p>
+                    </div>
+                  </Card.Body>
+
+                </Card>
+              </>
+              ) : (<> </>)}
+            </Col>
+
             <Card className="card-stats">
               <Card.Header>
                 <Card.Title as="h4">Estadísticas de crecimiento</Card.Title>
